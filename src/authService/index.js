@@ -9,9 +9,9 @@ const authService = () => {
   let redux = undefined 
   const initialize = store => (redux = store)
 
-  const login = credentials => {
-    console.log(credentials);
-    store.set(TOKEN, credentials.username);
+  const login = token => {
+    console.log(token);
+    store.set(TOKEN, token);
     window.location.replace('/');
   }
 

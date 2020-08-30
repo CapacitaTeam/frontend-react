@@ -7,33 +7,62 @@ import authService from '../../../authService';
 import Background from './background.svg';
 //import './style.css';
 
-const onFinish = values => {
-    authService.login(values);
-  };
+import { gql } from 'apollo-boost';
+import { useMutation, throwServerError } from '@apollo/react-hooks';
+
+const LOGIN_REQUEST = gql`
+  
+    mutation Login ($username: String!, $password: String!) {
+      login(username: $username, password: $password){
+        username
+        token
+      }
+
+    }
+  
+`;
+
+const validatePassword = () => true
 
 const Login = () => {
+
+  const onFinish = async ({ username, password }) => {
+    console.log(username, password);
+
+    const { token } = await login_mutation({ variables: { username, password } })
+      .then(res => res.data.login)
+      .catch(err => err);
+
+    token !== 'null' ? authService.login(token) : authService.logout(); window.location.replace('/');
+    // authService.login(token);
+
+  };
+
+  const [login_mutation] = useMutation(LOGIN_REQUEST)
+
   const loginProps = {
-    className:"my-auto",
-    style:{
+    className: "my-auto",
+    style: {
       width: '300px'
     }
   }
   const logoProps = {
-    className:"mw-100 h-100 mt-4 mb-4"
+    className: "mw-100 h-100 mt-4 mb-4"
   }
 
   const formProps = {
-    onFinish: onFinish
+    onFinish: onFinish,
+    validatePassword: validatePassword
   }
 
   return (
-    <section className = "d-flex justify-content-center vh-100" style={{ backgroundImage: `url(${Background})` }}>
+    <section className="d-flex justify-content-center vh-100" style={{ backgroundImage: `url(${Background})` }}>
       <Card {...loginProps}>
-        <Logo {...logoProps}/>
-        <FormLogin {...formProps}/>
+        <Logo {...logoProps} />
+        <FormLogin {...formProps} />
       </Card>
     </section>
   )
 };
-  
-  export default Login;
+
+export default Login;

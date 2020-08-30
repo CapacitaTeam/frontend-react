@@ -8,7 +8,16 @@ import thunk from 'redux-thunk'
 import { Provider } from 'react-redux'
 import { createStore, compose, applyMiddleware } from 'redux'
 
+import ApolloClient from "apollo-boost";
+import { ApolloProvider } from "@apollo/react-hooks";
+
+const client = new ApolloClient({
+  uri: 'http://localhost:3001/graphql'
+});
+
 ReactDOM.render(
-  <App />,
+  <ApolloProvider client={client}>
+    <App />
+  </ApolloProvider>,
   document.getElementById('root')
 );
