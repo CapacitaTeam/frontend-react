@@ -43,9 +43,11 @@ const Login = () => {
       .then(res => res.data.login)
       .catch(err => err);
 
-    if (token !== 'null'){
-      authService.login(token)
-      message.success('¡Bienvenid@ a Capacita!')
+    if (token !== 'null') {
+      message.success('¡Bienvenid@ a Capacita!');
+      setTimeout(() => {
+        authService.login(token)
+      }, 300)
     }
     else
       message.error('Credenciales Incorrectas');
