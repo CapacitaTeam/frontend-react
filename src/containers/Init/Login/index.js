@@ -2,6 +2,7 @@
 import React from 'react';
 import FormLogin from './Form';
 import Card from "antd/lib/card";
+import { message } from "antd";
 import Logo from '!svg-react-loader?name=Icon!../../../layouts/Logo/logo.svg';
 import authService from '../../../authService';
 import Background from './background.svg';
@@ -22,7 +23,16 @@ const LOGIN_REQUEST = gql`
   
 `;
 
-const validatePassword = () => true
+const validatePassword = (rule, value, callback) => {
+  // if (!authService.isAuthenticated()) {
+  //   return Promise.reject(
+  //     new Error(
+  //       'Revise sus credenciales.',
+  //     ),
+  //   );
+  // }
+  return Promise.resolve();
+};
 
 const Login = () => {
 
@@ -33,7 +43,12 @@ const Login = () => {
       .then(res => res.data.login)
       .catch(err => err);
 
-    token !== 'null' ? authService.login(token) : authService.logout(); window.location.replace('/');
+    if (token !== 'null'){
+      authService.login(token)
+      message.success('¡Bienvenid@ a Capacita!')
+    }
+    else
+      message.error('Credenciales Incorrectas');
     // authService.login(token);
 
   };
