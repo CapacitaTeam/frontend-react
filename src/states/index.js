@@ -5,6 +5,8 @@ import Init from '../containers/Init';
 //import Login from '../containers/Init/Login';
 import dashboard from './dashboard';
 import courses from './courses';
+import quizzes from './quizzes';
+import createQuiz from './createQuiz';
 import createCourse from './createCourse';
 
 import authService from '../authService';
@@ -27,7 +29,7 @@ const states = [
             const toParams = trans.params('to');
 
             if(toState.name === 'App' && !toParams.view){
-                const states = ['App.Dashboard','App.Courses','App.CreateCourse'];
+                const states = ['App.Dashboard','App.Courses','App.CreateCourse', 'App.Quizzes', 'App.CreateQuiz'];
                 return find(states, state => $state.target(state).exists());
             }else{
                 return null;
@@ -54,6 +56,8 @@ const states = [
     },
     ...dashboard,
     ...courses,
+    ...quizzes,
+    ...createQuiz,
     ...createCourse
 ];
 
