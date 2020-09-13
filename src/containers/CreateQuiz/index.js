@@ -1,33 +1,51 @@
-import React from 'react'
-import { Input, List, Typography, Divider, Button } from 'antd';
+import React, { useState } from 'react'
+import { Input, Radio, List, Typography, Divider, Button } from 'antd';
+import FormPregunta from './Form';
 
 const { TextArea } = Input;
 
-const data = [
-   ""
-];
+const initialState = {
+    id: 0,
+    question: '',
+    answers: [
+        {
+            answer_one: '',
+            status: false
+        },
+        {
+            answer_two: '',
+            status: false
+        },
+        {
+            answer_three: '',
+            status: false
+        },
+        {
+            answer_four: '',
+            status: false
+        }
+    ],
+    correct_answer: 0
+};
 
 const CreateQuiz = () => {
+
+    const [state, setState] = useState(initialState);
+
+    const onChange = e => {
+        //console.log('radio checked', e.target.value);
+        setState(e.target.value);
+    };
+
+    const guardarPregunta = e => {
+        console.log(state);
+    }
+
+    const onFinish = (e) => console.log(state);
+
     return (
         <>
-            <TextArea rows={2} placeholder='Escriba la Pregunta' />
-
-            <br></br>
-
-            <List
-                header={<div>Lista de Respuestas</div>}
-                footer={<Button type='primary'>Guardar Pregunta</Button>}
-                bordered
-                dataSource={data}
-                renderItem={item => (
-                    <List.Item>
-                        <Input placeholder='Respuesta a'></Input>
-                        <Input placeholder='Respuesta b'></Input>
-                        <Input placeholder='Respuesta c'></Input>
-                        <Input placeholder='Respuesta d'></Input>
-                    </List.Item>
-                )}
-            />
+            <FormPregunta onChange={onChange} state={state} onFinish={onFinish} />          
         </>
     )
 }
