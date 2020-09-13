@@ -1,12 +1,7 @@
 import React from 'react';
 import { Form, Input, Button, Row, Radio, Col } from 'antd';
-import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
 const { TextArea } = Input;
-
-const email = value =>
-    value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value) ?
-        'Wrong Email Address' : undefined;
 
 const required = value => value ? undefined : 'required';
 
@@ -28,7 +23,7 @@ const FormPregunta = props => {
 
                         {
                             props.state.answers.map((respuesta, key) => {
-                                return <ElementoRespuesta value={key} respuesta={respuesta.value} />
+                                return <ElementoRespuesta key={key} value={key} respuesta={respuesta.value} />
                             })
                         }
                     </Radio.Group>

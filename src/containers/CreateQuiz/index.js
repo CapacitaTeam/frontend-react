@@ -1,27 +1,34 @@
 import React, { useState } from 'react'
-import { Input, Radio, List, Typography, Divider, Button } from 'antd';
+import { Input, Row, Col, Divider } from 'antd';
 import FormPregunta from './Form';
-
-const { TextArea } = Input;
+import Questions from './Questions';
 
 const initialState = {
     id: 0,
     question: '',
     answers: [
         {
-            answer_one: '',
+            id: 1,
+            number: 1,
+            answer: 'Respuesta #1',
             status: false
         },
         {
-            answer_two: '',
+            id: 2,
+            number:2,
+            answer: 'Respuesta #2',
             status: false
         },
         {
-            answer_three: '',
+            id: 3,
+            number:3,
+            answer: 'Respuesta #3',
             status: false
         },
         {
-            answer_four: '',
+            id: 4,
+            number:4,
+            answer: 'Respuesta #4',
             status: false
         }
     ],
@@ -45,7 +52,19 @@ const CreateQuiz = () => {
 
     return (
         <>
-            <FormPregunta onChange={onChange} state={state} onFinish={onFinish} />          
+            <Row>
+                <Col span={7}>
+                    <Questions />
+                </Col>
+
+                <Col className="text-center" span={1}>
+                    <Divider type="vertical" style={{ height: '100%' }} />
+                </Col>
+
+                <Col span={16}>
+                    <FormPregunta onChange={onChange} state={state} onFinish={onFinish} />
+                </Col>
+            </Row>
         </>
     )
 }
