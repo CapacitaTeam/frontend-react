@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Row, Col, Typography, Table, Space, Avatar, Badge     } from 'antd';
+import { Row, Col, Typography    } from 'antd';
 import { UserOutlined  } from '@ant-design/icons';
 import ButtonControls from './ButtonControls';
 import TableStudents from './TableStudents';

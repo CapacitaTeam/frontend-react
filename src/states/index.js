@@ -9,9 +9,12 @@ import createCourse from './createCourse';
 import quizzes from './quizzes';
 import createQuiz from './createQuiz';
 import students from './students';
+import createStudent from './createStudent';
+import importStudent from './importStudent';
 
 
 import authService from '../authService';
+import CreateStudent from '../containers/CreateStudent';
 const states = [
     // Root App
     {
@@ -31,7 +34,7 @@ const states = [
             const toParams = trans.params('to');
 
             if(toState.name === 'App' && !toParams.view){
-                const states = ['App.Dashboard','App.Courses','App.CreateCourse', 'App.Quizzes', 'App.CreateQuiz','App.Students'];
+                const states = ['App.Dashboard','App.Courses','App.CreateCourse', 'App.Quizzes', 'App.CreateQuiz','App.Students','App.CreateStudent','App.ImportStudent'];
                 return find(states, state => $state.target(state).exists());
             }else{
                 return null;
@@ -61,7 +64,9 @@ const states = [
     ...createCourse,
     ...quizzes,
     ...createQuiz,
-    ...students
+    ...students,
+    ...createStudent,
+    ...importStudent
     
 ];
 

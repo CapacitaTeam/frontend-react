@@ -7,12 +7,12 @@ const ButtonControl = (props) => {
   
     return  <Row gutter={[5, 8]}>
                 <Col span={12}>
-                    <UISref to="App.CreateQuiz" >
+                    <UISref to="App.CreateStudent" >
                         <Button icon={<UserAddOutlined />} type="primary">Agregar</Button>
                     </UISref>                            
                 </Col>
                 <Col span={12}>
-                    <UISref to="App.CreateQuiz" >
+                    <UISref to="App.ImportStudent" >
                         <Button icon={<UsergroupAddOutlined />}type="primary" >Importar</Button>
                     </UISref>
                 </Col>

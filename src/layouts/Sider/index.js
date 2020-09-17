@@ -40,7 +40,7 @@ const Sider = props =>{
                     </Menu.Item>
                     <Menu.Item key="6" icon={<AppstoreAddOutlined />}>
                         <UISref to="App.Students" ><a>Estudiantes</a></UISref>
-                    </Menu.Item>
+                    </Menu.Item>                   
                 </Menu>
                 )}
                 
