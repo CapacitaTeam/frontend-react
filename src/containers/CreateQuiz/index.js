@@ -5,50 +5,72 @@ import Questions from './Questions';
 
 const initialState = {
     id: 0,
-    question: '',
+    question: 'Pregunta Uno',
     answers: [
         {
             id: 1,
             number: 1,
+            name: 'OptionOne',
             answer: 'Respuesta #1',
             status: false
         },
         {
             id: 2,
-            number:2,
+            number: 2,
+            name: 'OptionTwo',
             answer: 'Respuesta #2',
             status: false
         },
         {
             id: 3,
-            number:3,
+            number: 3,
+            name: 'OptionThree',
             answer: 'Respuesta #3',
-            status: false
+            status: true
         },
         {
             id: 4,
-            number:4,
+            number: 4,
+            name: 'OptionFour',
             answer: 'Respuesta #4',
             status: false
         }
     ],
-    correct_answer: 0
+    correct_answer: 2
 };
 
 const CreateQuiz = () => {
 
     const [state, setState] = useState(initialState);
 
-    const onChange = e => {
-        //console.log('radio checked', e.target.value);
-        setState(e.target.value);
+    const onChangeSwitch = e => {
+        console.log('Switch selected: ', e);
+        //setState({...state, e.target.value});
     };
+
+    const onChangeInputAnswer = e => {
+        console.log('Input typed: ', e.target.value);//.target.value);
+        console.log(e);
+        //setState({...state, e.target.value});
+    }
+
+    const onChangeNameQuestion = e => {
+        console.log('Textarea typed: ', e.target.value);
+        //setState({...state, e.target.value});
+    }
 
     const guardarPregunta = e => {
         console.log(state);
     }
 
-    const onFinish = (e) => console.log(state);
+    const onFinish = (props) => {
+        console.log(props);        
+        alert(JSON.stringify(props))
+    }
+
+    const valuesChanged = e => console.log(e);
+
+    //Aplicar Context 
 
     return (
         <>
@@ -62,7 +84,7 @@ const CreateQuiz = () => {
                 </Col>
 
                 <Col span={16}>
-                    <FormPregunta onChange={onChange} state={state} onFinish={onFinish} />
+                    <FormPregunta onChange={valuesChanged} onChangeNameQuestion={onChangeNameQuestion} onChangeInputAnswer={onChangeInputAnswer} onChangeSwitch={onChangeSwitch} state={state} onFinish={onFinish} />
                 </Col>
             </Row>
         </>
