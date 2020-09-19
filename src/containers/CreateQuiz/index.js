@@ -3,69 +3,56 @@ import { Input, Row, Col, Divider } from 'antd';
 import FormPregunta from './Form';
 import Questions from './Questions';
 
-const initialState = {
-    id: 0,
-    question: 'Pregunta Uno',
-    answers: [
-        {
-            id: 1,
-            number: 1,
-            name: 'OptionOne',
-            answer: 'Respuesta #1',
-            status: false
-        },
-        {
-            id: 2,
-            number: 2,
-            name: 'OptionTwo',
-            answer: 'Respuesta #2',
-            status: false
-        },
-        {
-            id: 3,
-            number: 3,
-            name: 'OptionThree',
-            answer: 'Respuesta #3',
-            status: true
-        },
-        {
-            id: 4,
-            number: 4,
-            name: 'OptionFour',
-            answer: 'Respuesta #4',
-            status: false
-        }
-    ],
-    correct_answer: 2
-};
+import QuestionContext from './QuestionContext';
 
 const CreateQuiz = () => {
 
-    const [state, setState] = useState(initialState);
-
-    const onChangeSwitch = e => {
-        console.log('Switch selected: ', e);
-        //setState({...state, e.target.value});
+    const initialState = {
+        id: 0,
+        question: 'Pregunta Uno',
+        answers: [
+            {
+                id: 1,
+                number: 1,
+                name: 'OptionOne',
+                answer: 'Respuesta #1',
+                status: false
+            },
+            {
+                id: 2,
+                number: 2,
+                name: 'OptionTwo',
+                answer: 'Respuesta #2',
+                status: false
+            },
+            {
+                id: 3,
+                number: 3,
+                name: 'OptionThree',
+                answer: 'Respuesta #3',
+                status: true
+            },
+            {
+                id: 4,
+                number: 4,
+                name: 'OptionFour',
+                answer: 'Respuesta #4',
+                status: false
+            }
+        ],
+        correct_answer: 2
     };
 
-    const onChangeInputAnswer = e => {
-        console.log('Input typed: ', e.target.value);//.target.value);
-        console.log(e);
-        //setState({...state, e.target.value});
-    }
+    const [question, setQuestion] = useState(initialState)
 
-    const onChangeNameQuestion = e => {
-        console.log('Textarea typed: ', e.target.value);
-        //setState({...state, e.target.value});
-    }
-
-    const guardarPregunta = e => {
-        console.log(state);
+    const guardarPregunta = e => {        
     }
 
     const onFinish = (props) => {
-        console.log(props);        
-        alert(JSON.stringify(props))
+
+        //setQuestion({...question, })
+
+        console.log(props);
     }
 
     const valuesChanged = e => console.log(e);
@@ -73,7 +60,7 @@ const CreateQuiz = () => {
     //Aplicar Context 
 
     return (
-        <>
+        <QuestionContext.Provider value={{question, setQuestion}}>
             <Row>
                 <Col span={7}>
                     <Questions />
@@ -84,10 +71,10 @@ const CreateQuiz = () => {
                 </Col>
 
                 <Col span={16}>
-                    <FormPregunta onChange={valuesChanged} onChangeNameQuestion={onChangeNameQuestion} onChangeInputAnswer={onChangeInputAnswer} onChangeSwitch={onChangeSwitch} state={state} onFinish={onFinish} />
+                    <FormPregunta onFinish={onFinish} />
                 </Col>
             </Row>
-        </>
+        </QuestionContext.Provider >
     )
 }
 
