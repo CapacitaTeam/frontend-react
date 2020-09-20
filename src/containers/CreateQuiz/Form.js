@@ -1,48 +1,68 @@
-import React, { useContext } from 'react';
-import { Form, Input, Button, Row, Radio, Col } from 'antd';
+import React, { useContext, useEffect, useState } from 'react';
+import { Form, Input, Button, Row, Radio, Col, Typography } from 'antd';
 import QuestionContext from './QuestionContext';
+import './quiz.css';
 
 const { TextArea } = Input;
-
-const required = value => value ? undefined : 'required';
-
-const ElementoRespuesta = e => {
-    //console.log(e);
-    return <Form.Item name={`radio_${e.name}`} initialValue={e.number}>
-
-        <Radio value={e.number} className="mb-0 pt-0 float-right" style={{ width: '100%' }}>
-
-            <Form.Item name={e.name} className="mb-0 float-right" style={{ width: '95%', marginTop: '-5px' }} label="Respuesta" initialValue={e.answer}>
-                <TextArea rows={2} placeholder='Respuesta a'></TextArea>
-            </Form.Item>
-
-        </Radio>
-
-    </Form.Item>
-}
+const { Title } = Typography;
 
 const FormPregunta = props => {
 
-    const {question, setQuestion} = useContext(QuestionContext);
+    const { question, setQuestion } = useContext(QuestionContext);
 
-    //console.log('UseContext sape: ' + JSON.stringify(question));
+    const [formKey, setFormKey] = useState(1);
+
+    useEffect(() => {
+        console.log(question);
+        setFormKey(formKey + 1);
+    }, [question]);
 
     return (
         <>
 
-            <Form name="normal_login" className="mt-2" onFinish={props.onFinish}>
+            <Title level={3}>{question.id === 0 ? 'Nueva Pregunta' : 'Editar Pregunta'}</Title>
 
-                <Form.Item name="question" initialValue={question.question}>
+            <Form key={formKey} name="normal_login" className="mt-2" onFinish={props.onFinish}>
+
+                <Form.Item rules={[{ required: true, message: "Escriba la pregunta solicitada" }]} name="question" initialValue={question.question}>
                     <TextArea rows={3} placeholder='Escriba la Pregunta' />
                 </Form.Item>
 
-                <Form.Item name="radio-group" initialValue={question.correct_answer}>
-                    <Radio.Group value={question.correct_answer} style={{ width: '100%' }}>                       
-                        {
-                            question.answers.map((respuesta, index) => {
-                                return <ElementoRespuesta number={respuesta.number} name={respuesta.name} key={respuesta.id} answer={respuesta.answer} />
-                            })
-                        }
+                <Form.Item rules={[{ required: true, message: "Seleccione una respuesta como Correcta" }]} name="radio-group" initialValue={question.correct_answer}>
+                    <Radio.Group value={question.correct_answer} className="radio-quiz">
+
+                        <Form.Item name="radio_a" initialValue="a">
+                            <Radio value="a" className="mb-0 pt-0 float-right radio-quiz">
+                                <Form.Item rules={[{ required: true, message: "Escriba la respuesta solicitada" }]} name="a" className="mb-0 float-right item-answer-quiz" label="Respuesta" initialValue={question.a}>
+                                    <TextArea rows={2} placeholder='Respuesta a'></TextArea>
+                                </Form.Item>
+                            </Radio>
+                        </Form.Item>
+
+                        <Form.Item name="radio_b" initialValue="b">
+                            <Radio value="b" className="mb-0 pt-0 float-right radio-quiz">
+                                <Form.Item rules={[{ required: true, message: "Escriba la respuesta solicitada" }]} name="b" className="mb-0 float-right item-answer-quiz" label="Respuesta" initialValue={question.b}>
+                                    <TextArea rows={2} placeholder='Respuesta b'></TextArea>
+                                </Form.Item>
+                            </Radio>
+                        </Form.Item>
+
+                        <Form.Item name="radio_c" initialValue="c">
+                            <Radio value="c" className="mb-0 pt-0 float-right radio-quiz">
+                                <Form.Item rules={[{ required: true, message: "Escriba la respuesta solicitada" }]} name="c" className="mb-0 float-right item-answer-quiz" label="Respuesta" initialValue={question.c}>
+                                    <TextArea rows={2} placeholder='Respuesta c'></TextArea>
+                                </Form.Item>
+                            </Radio>
+                        </Form.Item>
+
+                        <Form.Item name="radio_d" initialValue="d">
+                            <Radio value="d" className="mb-0 pt-0 float-right radio-quiz">
+                                <Form.Item rules={[{ required: true, message: "Escriba la respuesta solicitada" }]} name="d" className="mb-0 float-right item-answer-quiz" label="Respuesta" initialValue={question.d}>
+                                    <TextArea rows={2} placeholder='Respuesta d'></TextArea>
+                                </Form.Item>
+                            </Radio>
+                        </Form.Item>
+
                     </Radio.Group>
                 </Form.Item>
 
