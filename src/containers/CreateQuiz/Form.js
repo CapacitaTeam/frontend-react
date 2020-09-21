@@ -13,7 +13,7 @@ const FormPregunta = props => {
     const [formKey, setFormKey] = useState(1);
 
     useEffect(() => {
-        console.log(question);
+        //console.log(question);
         setFormKey(formKey + 1);
     }, [question]);
 
@@ -24,11 +24,15 @@ const FormPregunta = props => {
 
             <Form key={formKey} name="normal_login" className="mt-2" onFinish={props.onFinish}>
 
+                <Form.Item name="id" style={{ display: 'none' }} initialValue={question.id}>
+                    <Input></Input>
+                </Form.Item>
+
                 <Form.Item rules={[{ required: true, message: "Escriba la pregunta solicitada" }]} name="question" initialValue={question.question}>
                     <TextArea rows={3} placeholder='Escriba la Pregunta' />
                 </Form.Item>
 
-                <Form.Item rules={[{ required: true, message: "Seleccione una respuesta como Correcta" }]} name="radio-group" initialValue={question.correct_answer}>
+                <Form.Item rules={[{ required: true, message: "Seleccione una respuesta como Correcta" }]} name="correct_answer" initialValue={question.correct_answer}>
                     <Radio.Group value={question.correct_answer} className="radio-quiz">
 
                         <Form.Item name="radio_a" initialValue="a">

@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
-import { Row, Col, Divider } from 'antd';
+import React, { useEffect, useState } from 'react'
+import { Row, Col, Divider, Spin, message } from 'antd';
 import FormPregunta from './Form';
 import Questions from './Questions';
 
 import QuestionContext from './QuestionContext';
-import { gql } from 'apollo-boost';
-import { useQuery } from '@apollo/react-hooks';
+import { gql, NetworkStatus } from 'apollo-boost';
+import { useQuery, useMutation } from '@apollo/react-hooks';
 
 const QUESTION_QUIZ_REQUEST = gql`  
     query QuestionsQuiz {
@@ -19,6 +19,18 @@ const QUESTION_QUIZ_REQUEST = gql`
             d
         }
     }`;
+
+const CREATE_QUESTION_QUIZ = gql`
+  
+mutation CreateQuestionQuiz ($id: Int, $question: String!, $a: String!, $b: String!, $c: String!, $d: String!, $correct_answer: String!, $clue: String, $img: String, $video: String, $status: Boolean) {
+    createQuestionQuiz(id: $id, question: $question, a: $a, b: $b, c: $c, d: $d, correct_answer: $correct_answer, clue: $clue, img: $img, video: $video, status: $status){
+    id
+    question
+  }
+
+}
+
+`;
 
 const initialState = {
     id: 0,
@@ -34,23 +46,48 @@ const CreateQuiz = () => {
 
     const [question, setQuestion] = useState(initialState);
 
-    const { loading, error, data } = useQuery(QUESTION_QUIZ_REQUEST);
+    const { loading, error, refetch, data, networkStatus } = useQuery(QUESTION_QUIZ_REQUEST, { notifyOnNetworkStatusChange: true });
+    const [create_question_quiz] = useMutation(CREATE_QUESTION_QUIZ);
 
-    if (loading) return <p>Loading...</p>;
+    useEffect(() => {
+        refetch();
+    }, [])
+
+    if (loading || networkStatus === NetworkStatus.refetch) return <div className="contains-spin"><Spin /></div>;
     if (error) return <p>Error :(</p>;
 
-    const onFinish = (props) => {
-        //setQuestion({...question, })
-        console.log(props);
-    }
+    const onFinish = async ({ id, question, a, b, c, d, correct_answer }) => {
 
-    const valuesChanged = e => console.log(e);
+        console.log(id, question, a, b, c, d, correct_answer);
+
+        if (id === 0) {
+            const new_question = await create_question_quiz({ variables: { question, a, b, c, d, correct_answer, clue: ' - ', img: ' -', video: ' - ', status: true } })
+                .then(res => {
+                    message.success('Pregunta creada exitosamente.');
+                    setQuestion(initialState);
+                    refetch();
+                    return res;
+                })
+                .catch(err => {
+                    message.error(setTimeout(() => {
+                        'Inténtelo luego.'
+                    }, 300));
+
+                    return null;
+                });
+
+            if (new_question)
+                console.log('Resultado: Question-> ' + new_question.data.createQuestionQuiz.question);
+        }
+
+
+    }
 
     //Aplicar Context 
     return (
         <QuestionContext.Provider value={{ question, setQuestion, questions: data.questionsQuiz }}>
             <Row>
-                <Col span={7}>
+                <Col span={7} style={{ maxHeight: '80vh', overflow: 'auto', paddingBottom: '5px' }}>
                     <Questions />
                 </Col>
 
