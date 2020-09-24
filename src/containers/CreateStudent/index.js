@@ -32,7 +32,7 @@ const AutoCompleteOption = AutoComplete.Option;
         span: 24,
       },
       sm: {
-        span: 16,
+        span: 24,
       },
     },
   };
@@ -44,7 +44,7 @@ const AutoCompleteOption = AutoComplete.Option;
         offset: 0,
       },
       sm: {
-        span: 18,
+        span: 24,
         offset: 6,
       },
     },
@@ -64,14 +64,10 @@ const CreateStudent = (props) => {
     };  
 
     return (
-        <>            
+        <>           
+           
             <Row>
-                <Col span={8}>
-                    <Title level={3}>Agregar Estudiantes</Title>
-                </Col>               
-            </Row>
-            <Row>
-                <Col span={12} offset={6}>
+                <Col span={24}>
                     <Form
                         {...formItemLayout}
                         form={form}

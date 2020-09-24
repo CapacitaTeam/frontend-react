@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState } from 'react'
 import {Table, Space, Avatar, Input, Button  } from 'antd';
 import { UserOutlined, SearchOutlined   } from '@ant-design/icons';
 import Highlighter from 'react-highlight-words';
@@ -10,7 +10,6 @@ function TableStudents() {
     const [selectionType, setSelectionType] = useState('checkbox');
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');
-    const searchInput = useRef(null);
   
     const dataSource = [
         {
@@ -106,6 +105,14 @@ function TableStudents() {
           
         const columns = [
             {
+              title: 'Acción',
+              key: 'action',
+              dataIndex: 'action',
+              render: (text, record) => (
+                  <StatusDisabled />
+              ),
+            },
+            {
                 title: 'Imagen',
                 dataIndex: 'image',
                 key: 'image',           
@@ -152,14 +159,7 @@ function TableStudents() {
                     <StatusStudent status={{text}} />                       
                   ),
             },
-            {
-                title: 'Acción',
-                key: 'action',
-                dataIndex: 'action',
-                render: (text, record) => (
-                    <StatusDisabled />
-                ),
-              },
+          
         ];
     
         return       <Table
