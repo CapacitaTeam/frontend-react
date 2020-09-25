@@ -6,6 +6,7 @@ import StatusDisabled from '../StatusDisabled';
 import StatusStudent from '../StatusStudent';
 
 
+
 function TableStudents() {
     const [selectionType, setSelectionType] = useState('checkbox');
     const [searchText, setSearchText] = useState('');

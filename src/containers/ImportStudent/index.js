@@ -26,12 +26,7 @@ const props = {
  
 const ImportStudent = (props) => {
     return (
-        <>            
-            <Row>
-                <Col span={8}>
-                    <Title level={3}>Importar Estudiantes</Title>
-                </Col>               
-            </Row>
+        <>      
             <Row>
                 <Col span={24}>
                     <Dragger {...props}>

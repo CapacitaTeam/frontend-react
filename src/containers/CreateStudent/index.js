@@ -140,11 +140,11 @@ const CreateStudent = (props) => {
 
                        
 
-                        <Form.Item {...tailFormItemLayout}>
+                       {/*  <Form.Item {...tailFormItemLayout}>
                             <Button type="primary" htmlType="submit">
                             Agregar
                             </Button>
-                        </Form.Item>
+                        </Form.Item> */}
 
                     </Form>
                 </Col>

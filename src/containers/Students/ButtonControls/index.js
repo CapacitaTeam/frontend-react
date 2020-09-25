@@ -1,32 +1,15 @@
-import React, { useState } from 'react'
-import { Row, Col, Button  } from 'antd';
-import { UserAddOutlined, UsergroupAddOutlined  } from '@ant-design/icons';
-import { UISref } from '@uirouter/react';
-import Modal from '../../../components/Modal';
-import CreateStudent from '../../CreateStudent';
+import React from 'react'
+import { Row, Col  } from 'antd';
+import ButtonAdd from './ButtonAdd';
+import ButtonImport from './ButtonImport';
 
-const ButtonControl = (_) => {
-    
-    const handleParentData = (formModel) => {}   
-
-    const props = {
-        dialog: {
-          title:"Crear Estudiantes",
-          FormContent:<CreateStudent handleData={handleParentData}/>
-        },
-        button:{
-            icon:<UserAddOutlined />,
-            text:"Agregar"
-        }
-      }
+const ButtonControl = (_) => {  
     return  <Row gutter={[5, 8]}>  
-                <Col span={12}>
-                    <Modal {...props}></Modal>                                            
+                <Col span={12}>   
+                    <ButtonAdd></ButtonAdd>                    
                 </Col>
                 <Col span={12}>
-                    <UISref to="App.ImportStudent" >
-                        <Button icon={<UsergroupAddOutlined />}type="primary" >Importar</Button>
-                    </UISref>
+                   <ButtonImport></ButtonImport>
                 </Col>
             </Row>  
   };
