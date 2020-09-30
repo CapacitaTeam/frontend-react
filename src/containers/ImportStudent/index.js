@@ -1,14 +1,13 @@
 import React, { useState } from 'react'
-import { Row, Col, Typography, Upload, message    } from 'antd';
+import { Row, Col, Upload, message    } from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
 
 const { Dragger } = Upload;
 
-const { Title } = Typography;
 
 const props = {
     name: 'file',
-    multiple: true,
+    multiple: false,
     action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
     onChange(info) {
       const { status } = info.file;

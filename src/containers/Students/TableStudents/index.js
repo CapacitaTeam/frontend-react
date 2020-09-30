@@ -1,33 +1,36 @@
-import React, { useState } from 'react'
-import {Table, Space, Avatar, Input, Button  } from 'antd';
+import React, { useEffect, useState } from 'react'
+import {Table, Space, Avatar, Input, Button, Spin  } from 'antd';
 import { UserOutlined, SearchOutlined   } from '@ant-design/icons';
 import Highlighter from 'react-highlight-words';
 import StatusDisabled from '../StatusDisabled';
 import StatusStudent from '../StatusStudent';
+import { gql, NetworkStatus } from 'apollo-boost';
+import { useQuery, useMutation } from '@apollo/react-hooks';
 
-
+const STUDENTS_LIST_REQUEST = gql`  
+    query User {
+        users{
+           username
+            status
+            createdat
+        }
+    }`;
 
 function TableStudents() {
+    const { loading, error, refetch, data, networkStatus } = useQuery(STUDENTS_LIST_REQUEST, { notifyOnNetworkStatusChange: true });
     const [selectionType, setSelectionType] = useState('checkbox');
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');
+
+    useEffect(() => {
+      refetch();
+    }, [])
+
+    if (loading || networkStatus === NetworkStatus.refetch) return <div className="contains-spin"><Spin /></div>;
+    if (error) return <p>Error :(</p>;
   
-    const dataSource = [
-        {
-            key: '1',
-            name: 'Stella Johnson',
-            createdat: '10/05/2020',
-            course: 15,
-            status: "Activo",
-        },
-        {
-            key: '2',
-            name: 'Jonathan Madano',
-            createdat: '31/02/2020',
-            course: 17,
-            status: "Inactivo",
-        },
-    ];
+    const dataSource = data.users;
+    console.log(dataSource);
     
     const rowSelection = {
         onChange: (selectedRowKeys, selectedRows) => {
@@ -125,13 +128,13 @@ function TableStudents() {
                   
             },
             {
-                title: 'Nombre',
-                dataIndex: 'name',
-                key: 'name',
+                title: 'Username',
+                dataIndex: 'username',
+                key: 'username',
                 defaultSortOrder: 'descend',
-                sorter: (a, b) => ('' + a.name).localeCompare(b.name),
+                sorter: (a, b) => ('' + a.username).localeCompare(b.username),
                 sortDirections: ['descend', 'ascend'],    
-                ...getColumnSearchProps('name'),
+                ...getColumnSearchProps('username'),
             },
             {
                 title: 'Creado',

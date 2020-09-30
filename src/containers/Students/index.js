@@ -6,8 +6,8 @@ import TableStudents from './TableStudents';
 import { ModalProvider } from "../../components/Modal/modalContext";
 
 
-
 const { Title } = Typography;
+
 
 const Students = (props) => {
     return (

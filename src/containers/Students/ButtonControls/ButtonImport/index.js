@@ -2,15 +2,16 @@ import React from 'react'
 import { Button  } from 'antd';
 import { UsergroupAddOutlined  } from '@ant-design/icons';
 import ImportStudent from '../../../ImportStudent';
+import ButtonImportCreateStudents from '../../../ImportStudent/ButtonImport';
 import { ModalContext } from '../../../../components/Modal/modalContext';
 
 const ButtonImport = (_) => {
     
     let { handleModal } = React.useContext(ModalContext);
-    const handleParentData = (formModel) => {} 
     const propsDialog = {       
-          title:"Importar Estudiantes",
-          Content:<ImportStudent handleData={handleParentData}/>        
+          Title:"Importar Estudiantes",
+          Content:<ImportStudent />,    
+          Footer:<ButtonImportCreateStudents/>    
       };
 
     return (
