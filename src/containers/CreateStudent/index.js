@@ -11,6 +11,7 @@ import {
     message
 } from 'antd';
 import { QuestionCircleOutlined } from '@ant-design/icons';
+import { ModalContext } from '../../components/Modal/modalContext';
 
 
 const { Title } = Typography;
@@ -52,6 +53,7 @@ const AutoCompleteOption = AutoComplete.Option;
 
 const CreateStudent = (props) => {
 
+    const { handleOk } = React.useContext(ModalContext);
     const [form] = Form.useForm();
 
     const onFinish = (values) => {
@@ -60,6 +62,8 @@ const CreateStudent = (props) => {
         message
         .loading('Cargando..', 2.5)
         .then(() => message.success('Estudiante agregado con éxito', 2.5))
+        
+        handleOk();
 
     };  
 
@@ -77,7 +81,8 @@ const CreateStudent = (props) => {
                         initialValues={{
                             status: '1'
                         }}
-                        scrollToFirstError>
+                        scrollToFirstError
+                        id="formCreateStudent">
 
                         <Form.Item
                             name="name"
@@ -135,16 +140,7 @@ const CreateStudent = (props) => {
                             <Option value="1">Activo</Option>
                             <Option value="2">Inactivo</Option>
                             </Select>
-                        </Form.Item>
-
-
-                       
-
-                       {/*  <Form.Item {...tailFormItemLayout}>
-                            <Button type="primary" htmlType="submit">
-                            Agregar
-                            </Button>
-                        </Form.Item> */}
+                        </Form.Item>                       
 
                     </Form>
                 </Col>

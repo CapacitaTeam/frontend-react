@@ -8,18 +8,11 @@ const Dialog = () => {
       return (          
         <>    
             <Modal 
-                title={modalContent.title}
+                title={modalContent.Title}
                 visible={modal}
                 onOk={handleOk}
                 onCancel={handleCancel}
-                footer={[
-                  <Button key="back" onClick={handleCancel}>
-                    Cancelar
-                  </Button>,
-                  <Button key="submit" htmlType="submit" type="primary" onClick={handleOk}>
-                    Agregar
-                  </Button>,
-                ]}
+                footer={modalContent.Footer}
             >
               {modalContent.Content}
             </Modal>
