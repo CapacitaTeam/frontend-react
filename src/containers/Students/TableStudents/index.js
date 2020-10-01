@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import {Table, Space, Avatar, Input, Button, Spin  } from 'antd';
 import { UserOutlined, SearchOutlined   } from '@ant-design/icons';
 import Highlighter from 'react-highlight-words';
-import StatusDisabled from '../StatusDisabled';
+import StatusDisabled from '../ButtonActions';
 import StatusStudent from '../StatusStudent';
 import { gql, NetworkStatus } from 'apollo-boost';
 import { useQuery, useMutation } from '@apollo/react-hooks';
@@ -10,7 +10,8 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 const STUDENTS_LIST_REQUEST = gql`  
     query User {
         users{
-           username
+            key: id
+            username
             status
             createdat
         }
@@ -30,7 +31,7 @@ function TableStudents() {
     if (error) return <p>Error :(</p>;
   
     const dataSource = data.users;
-    console.log(dataSource);
+    //console.log(dataSource);
     
     const rowSelection = {
         onChange: (selectedRowKeys, selectedRows) => {
@@ -46,6 +47,7 @@ function TableStudents() {
         searchText: '',
         searchedColumn: '',
       };
+      
     
     function getColumnSearchProps(dataIndex) {
         return {
@@ -155,12 +157,12 @@ function TableStudents() {
                 dataIndex: 'status',
                 key: 'status',               
                 filters: [
-                    { text: 'Activo', value: 'Activo' },
-                    { text: 'Inactivo', value: 'Inactivo' },
+                    { text: 'Activo', value: 'true' },
+                    { text: 'Inactivo', value: 'false' },
                 ],
-                onFilter: (value, record) => record.status.indexOf(value) === 0,
-                render: (text, record) => (                    
-                    <StatusStudent status={{text}} />                       
+                onFilter: (value, record) => record.status.toString().indexOf(value) === 0,
+                render: (value, record) => (                    
+                    <StatusStudent status={{value}} />                       
                   ),
             },
           
