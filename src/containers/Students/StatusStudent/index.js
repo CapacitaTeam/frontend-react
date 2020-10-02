@@ -1,13 +1,26 @@
 import React, { useState } from 'react'
-import { Row, Col, Typography, Table, Space, Avatar, Badge     } from 'antd';
+import { Switch } from 'antd';
+import { CloseOutlined, CheckOutlined  } from '@ant-design/icons';
+
 
 const StatusStudent = (props) => {
     //console.log(props.status.value);
+    var status = props.status.value;
+    const [checked, setChecked] = useState(status);
+
+    const handleClick = (checked) => {
+        //console.log(`switch - ${checked}`);
+        setChecked(checked)    
+      }
     return      <div>
                     {
-                        props.status.value == 0
-                        ? <Badge className="site-badge-count-109" count='Inactivo' style={{ backgroundColor: '#e91e63' }} />
-                        : <Badge className="site-badge-count-109" count='Activo' style={{ backgroundColor: '#52c41a' }} />
+                        <Switch
+                            checkedChildren={<CheckOutlined />}
+                            unCheckedChildren={<CloseOutlined />}
+                            onClick={handleClick}
+                            checked={checked}
+                        />     
+                        
                     }
                 </div>
   };

@@ -1,36 +1,22 @@
-import React, { useEffect, useState } from 'react'
-import {Table, Space, Avatar, Input, Button, Spin  } from 'antd';
+import React, { useState, useContext  } from 'react'
+import {Table, Space, Avatar, Input, Button } from 'antd';
 import { UserOutlined, SearchOutlined   } from '@ant-design/icons';
 import Highlighter from 'react-highlight-words';
-import StatusDisabled from '../ButtonActions';
+import ButtonActions from '../ButtonActions';
 import StatusStudent from '../StatusStudent';
-import { gql, NetworkStatus } from 'apollo-boost';
-import { useQuery, useMutation } from '@apollo/react-hooks';
+import { StudentContext } from '../studentContext';
 
-const STUDENTS_LIST_REQUEST = gql`  
-    query User {
-        users{
-            key: id
-            username
-            status
-            createdat
-        }
-    }`;
+
+
 
 function TableStudents() {
-    const { loading, error, refetch, data, networkStatus } = useQuery(STUDENTS_LIST_REQUEST, { notifyOnNetworkStatusChange: true });
+    let { users } = useContext(StudentContext);
+    
     const [selectionType, setSelectionType] = useState('checkbox');
     const [searchText, setSearchText] = useState('');
-    const [searchedColumn, setSearchedColumn] = useState('');
-
-    useEffect(() => {
-      refetch();
-    }, [])
-
-    if (loading || networkStatus === NetworkStatus.refetch) return <div className="contains-spin"><Spin /></div>;
-    if (error) return <p>Error :(</p>;
+    const [searchedColumn, setSearchedColumn] = useState('');   
   
-    const dataSource = data.users;
+    const dataSource = users;
     //console.log(dataSource);
     
     const rowSelection = {
@@ -114,9 +100,22 @@ function TableStudents() {
               title: 'Acción',
               key: 'action',
               dataIndex: 'action',
-              render: (text, record) => (
-                  <StatusDisabled />
+              render: (value, record) => (
+                  <ButtonActions status={{value}}/>
               ),
+            },
+            {
+              title: 'Estado',
+              dataIndex: 'status',
+              key: 'status',               
+              filters: [
+                  { text: 'Activo', value: 'true' },
+                  { text: 'Inactivo', value: 'false' },
+              ],
+              onFilter: (value, record) => record.status.toString().indexOf(value) === 0,
+              render: (value, record) => (                    
+                  <StatusStudent status={{value}} />                       
+                ),
             },
             {
                 title: 'Imagen',
@@ -152,19 +151,7 @@ function TableStudents() {
                 sorter: (a, b) => ('' + a.course).localeCompare(b.course),
                 ...getColumnSearchProps('course'),
             },
-            {
-                title: 'Estado',
-                dataIndex: 'status',
-                key: 'status',               
-                filters: [
-                    { text: 'Activo', value: 'true' },
-                    { text: 'Inactivo', value: 'false' },
-                ],
-                onFilter: (value, record) => record.status.toString().indexOf(value) === 0,
-                render: (value, record) => (                    
-                    <StatusStudent status={{value}} />                       
-                  ),
-            },
+            
           
         ];
     

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { 
     Typography, 
     Form,
@@ -8,10 +8,14 @@ import {
     Col,
     Button,
     AutoComplete,
-    message
+    message,
+    Spin
 } from 'antd';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import { ModalContext } from '../../components/Modal/modalContext';
+
+import { gql, NetworkStatus } from 'apollo-boost';
+import { useQuery, useMutation } from '@apollo/react-hooks';
 
 
 const { Title } = Typography;
@@ -51,20 +55,65 @@ const AutoCompleteOption = AutoComplete.Option;
     },
   };
 
+  const STUDENTS_LIST_REQUEST = gql`  
+    query User {
+        users{
+            key: id
+            username
+            status
+            createdat
+        }
+    }`;
+
+  const CREATE_USER = gql`  
+    mutation CreateUser ($firstname: String!, $lastname: String!, $username: String!, $password: String!, $status: Boolean!) {
+      createUser(firstname: $firstname, lastname: $lastname, username: $username, password: $password, status: $status){
+        username
+  }
+}`;
+
 const CreateStudent = (props) => {
 
     const { handleOk } = React.useContext(ModalContext);
     const [form] = Form.useForm();
 
-    const onFinish = (values) => {
+    const { loading, error, refetch, data, networkStatus } = useQuery(STUDENTS_LIST_REQUEST, { notifyOnNetworkStatusChange: true });
+    const [create_user] = useMutation(CREATE_USER);
+
+    useEffect(() => {
+        refetch();
+    }, [])
+
+    if (loading || networkStatus === NetworkStatus.refetch) return <div className="contains-spin"><Spin /></div>;
+    if (error) return <p>Error :(</p>;
+   
+
+    const onFinish = async (values) => {
       console.log('Received values of form: ', values);
+      values.password = '123456';
+      values.status = true;
 
-        message
-        .loading('Cargando..', 2.5)
-        .then(() => message.success('Estudiante agregado con éxito', 2.5))
-        
-        handleOk();
+      var firstname = values.firstname;
+      var lastname  = values.lastname;
+      var password  = values.password;
+      var status    = values.status;
+      var username  = values.username;
 
+      const new_user = await create_user({ variables: { firstname, lastname, username , password, status} })
+      .then(res => {
+          message
+          .loading('Cargando..', 2.5)
+          .then(() => message.success('Estudiante agregado con éxito', 2.5))
+          
+          handleOk();
+      })
+      .catch(err => {
+          message.error(setTimeout(() => {
+              'Inténtelo luego.'
+          }, 300));
+
+          return null;
+      });
     };  
 
     return (
@@ -79,13 +128,13 @@ const CreateStudent = (props) => {
                         name="register"
                         onFinish={onFinish}
                         initialValues={{
-                            status: '1'
+                            status: 'true'
                         }}
                         scrollToFirstError
                         id="formCreateStudent">
 
                         <Form.Item
-                            name="name"
+                            name="firstname"
                             label="Nombres"
                             rules={[                           
                             {
@@ -114,7 +163,7 @@ const CreateStudent = (props) => {
 
 
                         <Form.Item
-                            name="email"
+                            name="username"
                             label="Correo electrónico"
                             rules={[
                             {
@@ -137,8 +186,8 @@ const CreateStudent = (props) => {
                             label="Estado"                             
                         >
                             <Select>
-                            <Option value="1">Activo</Option>
-                            <Option value="2">Inactivo</Option>
+                            <Option value="true">Activo</Option>
+                            <Option value="false">Inactivo</Option>
                             </Select>
                         </Form.Item>                       
 

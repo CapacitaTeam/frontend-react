@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { createContext } from 'react';
 import useModal from './useModal';
 import Dialog from './Dialog';
 
 let ModalContext;
-let { Provider } = (ModalContext = React.createContext());
+let { Provider } = (ModalContext = createContext());
 
 const ModalProvider = ({ children }) => {
     let {  
