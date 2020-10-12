@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { 
     Typography, 
     Form,
@@ -13,6 +13,8 @@ import {
 } from 'antd';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import { ModalContext } from '../../components/Modal/modalContext';
+import { StudentContext } from '../Students/studentContext';
+
 
 import { gql, NetworkStatus } from 'apollo-boost';
 import { useQuery, useMutation } from '@apollo/react-hooks';
@@ -68,13 +70,14 @@ const AutoCompleteOption = AutoComplete.Option;
   const CREATE_USER = gql`  
     mutation CreateUser ($firstname: String!, $lastname: String!, $username: String!, $password: String!, $status: Boolean!) {
       createUser(firstname: $firstname, lastname: $lastname, username: $username, password: $password, status: $status){
-        username
+        key: id, username, status, createdat
   }
 }`;
 
 const CreateStudent = (props) => {
 
-    const { handleOk } = React.useContext(ModalContext);
+    const { handleOk } = useContext(ModalContext);
+    const { users, setusersDataSources } = useContext(StudentContext);
     const [form] = Form.useForm();
 
     const { loading, error, refetch, data, networkStatus } = useQuery(STUDENTS_LIST_REQUEST, { notifyOnNetworkStatusChange: true });
@@ -101,6 +104,8 @@ const CreateStudent = (props) => {
 
       const new_user = await create_user({ variables: { firstname, lastname, username , password, status} })
       .then(res => {
+        console.log(users.concat(res.data.createUser));
+        //setusersDataSources(users.concat(res.users));
           message
           .loading('Cargando..', 2.5)
           .then(() => message.success('Estudiante agregado con éxito', 2.5))

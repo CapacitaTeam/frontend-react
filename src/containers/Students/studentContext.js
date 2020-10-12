@@ -1,4 +1,4 @@
-import React, { createContext, useEffect  } from 'react';
+import React, { createContext, useEffect, useState  } from 'react';
 import { Spin } from 'antd';
 
 import { gql, NetworkStatus } from 'apollo-boost';
@@ -20,6 +20,7 @@ let { Provider } = (StudentContext = createContext());
 
 const StudentProvider = ({ children }) => {
     const { loading, error, refetch, data, networkStatus } = useQuery(STUDENTS_LIST_REQUEST, { notifyOnNetworkStatusChange: true });
+    const [usersDataSources, setusersDataSources] = useState([]);  
     useEffect(() => {
         refetch();
       }, [])
@@ -29,7 +30,7 @@ const StudentProvider = ({ children }) => {
 
    
     return (
-        <Provider value={{ users: data.users }}>
+        <Provider value={{ users: data.users, setusersDataSources }}>
         {children}
         </Provider>
     );
