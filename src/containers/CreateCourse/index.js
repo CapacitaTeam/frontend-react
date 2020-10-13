@@ -20,9 +20,8 @@ const CreateCourse = () => {
   return <div>
     <StepsControl current={current}/>
     <hr/>
-    <ButtonControls current={current} handleChange={onChangeStep} handleChangeChildren={onChangeChildren}/>
-    <hr/>
     <StepContent current={current}/>
+    <ButtonControls current={current} handleChange={onChangeStep} handleChangeChildren={onChangeChildren}/>
   </div>
 };
   

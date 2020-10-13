@@ -1,9 +1,14 @@
 import React from 'react';
+import stepOptions from '../StepsControls/steps';
+import classNames from 'classnames';
+// Style
+import style from '../style.module.scss'
 
 const StepContent = (props) => {
-    return <div>
-        {(props.current == 0)?<h1>Datos generales</h1>:(props.current == 1)?<h1>Recursos</h1>:<h1>Resumen</h1>}
-    </div>
+    const {current} = props;
+    const className = classNames(style.steps_content)
+    const contentProps = { className }
+    return <div {...contentProps}>{stepOptions[current].content}</div>
 }
 
 export default StepContent;

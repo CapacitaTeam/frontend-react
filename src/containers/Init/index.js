@@ -11,7 +11,8 @@ import authService from '../../authService';
 class Init extends React.Component {
 
     render() {
-        const view = (authService.isAuthenticated()) ? this.props.transition.params().view : 'Login';
+        //const view = (authService.isAuthenticated()) ? this.props.transition.params().view : 'Login';
+        const view = 'Test';
        
         switch (view){
             case 'Login':
