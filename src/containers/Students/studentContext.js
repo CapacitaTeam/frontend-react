@@ -1,36 +1,19 @@
-import React, { createContext, useEffect, useState  } from 'react';
-import { Spin } from 'antd';
-
-import { gql, NetworkStatus } from 'apollo-boost';
-import { useQuery, useMutation } from '@apollo/react-hooks';
-
-
-const STUDENTS_LIST_REQUEST = gql`  
-    query User {
-        users{
-            key: id
-            username
-            status
-            createdat
-        }
-    }`;
+import React, { createContext } from 'react';
+import useTableStudents from './useTableStudents';
+import index from './index';
 
 let StudentContext;
 let { Provider } = (StudentContext = createContext());
 
-const StudentProvider = ({ children }) => {
-    const { loading, error, refetch, data, networkStatus } = useQuery(STUDENTS_LIST_REQUEST, { notifyOnNetworkStatusChange: true });
-    const [usersDataSources, setusersDataSources] = useState([]);  
-    useEffect(() => {
-        refetch();
-      }, [])
-  
-    if (loading || networkStatus === NetworkStatus.refetch) return <div className="contains-spin"><Spin /></div>;
-    if (error) return <p>Error :(</p>;
-
-   
+const StudentProvider = ({ children }) => {        
+    let {  
+        usersDataSources,
+        setusersDataSources,
+        rowSelection,       
+        columns
+    } = useTableStudents();   
     return (
-        <Provider value={{ users: data.users, setusersDataSources }}>
+        <Provider value={{ usersDataSources, setusersDataSources, columns, rowSelection }}>
         {children}
         </Provider>
     );

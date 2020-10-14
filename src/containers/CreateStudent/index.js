@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useContext } from 'react'
 import { 
     Typography, 
     Form,
@@ -11,13 +11,11 @@ import {
     message,
     Spin
 } from 'antd';
-import { QuestionCircleOutlined } from '@ant-design/icons';
 import { ModalContext } from '../../components/Modal/modalContext';
 import { StudentContext } from '../Students/studentContext';
 
-
-import { gql, NetworkStatus } from 'apollo-boost';
-import { useQuery, useMutation } from '@apollo/react-hooks';
+import { gql } from 'apollo-boost';
+import { useMutation } from '@apollo/react-hooks';
 
 
 const { Title } = Typography;
@@ -57,16 +55,7 @@ const AutoCompleteOption = AutoComplete.Option;
     },
   };
 
-  const STUDENTS_LIST_REQUEST = gql`  
-    query User {
-        users{
-            key: id
-            username
-            status
-            createdat
-        }
-    }`;
-
+  
   const CREATE_USER = gql`  
     mutation CreateUser ($firstname: String!, $lastname: String!, $username: String!, $password: String!, $status: Boolean!) {
       createUser(firstname: $firstname, lastname: $lastname, username: $username, password: $password, status: $status){
@@ -75,131 +64,117 @@ const AutoCompleteOption = AutoComplete.Option;
 }`;
 
 const CreateStudent = (props) => {
+  
+  const { handleOk } = useContext(ModalContext);
+  const { usersDataSources, setusersDataSources } = useContext(StudentContext);
+  const [form] = Form.useForm();
 
-    const { handleOk } = useContext(ModalContext);
-    const { users, setusersDataSources } = useContext(StudentContext);
-    const [form] = Form.useForm();
+  const [create_user] = useMutation(CREATE_USER);   
 
-    const { loading, error, refetch, data, networkStatus } = useQuery(STUDENTS_LIST_REQUEST, { notifyOnNetworkStatusChange: true });
-    const [create_user] = useMutation(CREATE_USER);
 
-    useEffect(() => {
-        refetch();
-    }, [])
+  const onFinish = async (values) => {
+    console.log('Received values of form: ', values);
+    values.password = '123456';
+    values.status = true;
 
-    if (loading || networkStatus === NetworkStatus.refetch) return <div className="contains-spin"><Spin /></div>;
-    if (error) return <p>Error :(</p>;
-   
+    var firstname = values.firstname;
+    var lastname  = values.lastname;
+    var password  = values.password;
+    var status    = values.status;
+    var username  = values.username;
 
-    const onFinish = async (values) => {
-      console.log('Received values of form: ', values);
-      values.password = '123456';
-      values.status = true;
+    const new_user = await create_user({ variables: { firstname, lastname, username , password, status} })
+    .then(res => {    
+        setusersDataSources(usersDataSources.concat(res.data.createUser));
+        message
+        .loading('Cargando..', 2.5)
+        .then(() => message.success('Estudiante agregado con éxito', 2.5))
+        
+        handleOk();
+    })
+    .catch(err => {
+        message.error(setTimeout(() => {
+            'Inténtelo luego.'
+        }, 300));
 
-      var firstname = values.firstname;
-      var lastname  = values.lastname;
-      var password  = values.password;
-      var status    = values.status;
-      var username  = values.username;
+        return null;
+    });
+  };  
 
-      const new_user = await create_user({ variables: { firstname, lastname, username , password, status} })
-      .then(res => {
-        console.log(users.concat(res.data.createUser));
-        //setusersDataSources(users.concat(res.users));
-          message
-          .loading('Cargando..', 2.5)
-          .then(() => message.success('Estudiante agregado con éxito', 2.5))
+  return (
+      <>           
           
-          handleOk();
-      })
-      .catch(err => {
-          message.error(setTimeout(() => {
-              'Inténtelo luego.'
-          }, 300));
+        <Row>
+            <Col span={24}>
+                <Form
+                    {...formItemLayout}
+                    form={form}
+                    layout="vertical"
+                    name="register"
+                    onFinish={onFinish}
+                    initialValues={{
+                        status: 'true'
+                    }}
+                    scrollToFirstError
+                    id="formCreateStudent">
 
-          return null;
-      });
-    };  
+                    <Form.Item
+                        name="firstname"
+                        label="Nombres"
+                        rules={[                           
+                        {
+                            required: true,
+                            message: 'Nombres son requerido',
+                        },
+                        ]}
+                    >
+                        <Input />
+                    </Form.Item> 
 
-    return (
-        <>           
-           
-            <Row>
-                <Col span={24}>
-                    <Form
-                        {...formItemLayout}
-                        form={form}
-                        layout="vertical"
-                        name="register"
-                        onFinish={onFinish}
-                        initialValues={{
-                            status: 'true'
-                        }}
-                        scrollToFirstError
-                        id="formCreateStudent">
+                    <Form.Item
+                        name="lastname"
+                        label="Apellidos"
+                        rules={[                           
+                        {
+                            required: true,
+                            message: 'Apellidos son requerido',
+                        },
+                        ]}
+                    >
+                        <Input />
+                    </Form.Item> 
 
-                        <Form.Item
-                            name="firstname"
-                            label="Nombres"
-                            rules={[                           
-                            {
-                                required: true,
-                                message: 'Nombres son requerido',
-                            },
-                            ]}
-                        >
-                            <Input />
-                        </Form.Item> 
+                    <Form.Item
+                        name="username"
+                        label="Correo electrónico"
+                        rules={[
+                        {
+                            type: 'email',
+                            message: 'Favor ingresar correo valido',
+                        },
+                        {
+                            required: true,
+                            message: 'El correo es requerido',
+                        },
+                        ]}
+                    >
+                        <Input />
+                    </Form.Item>                      
 
+                    <Form.Item 
+                        name="status"
+                        label="Estado"                             
+                    >
+                        <Select>
+                        <Option value="true">Activo</Option>
+                        <Option value="false">Inactivo</Option>
+                        </Select>
+                    </Form.Item>                       
 
-                        <Form.Item
-                            name="lastname"
-                            label="Apellidos"
-                            rules={[                           
-                            {
-                                required: true,
-                                message: 'Apellidos son requerido',
-                            },
-                            ]}
-                        >
-                            <Input />
-                        </Form.Item> 
-
-
-
-                        <Form.Item
-                            name="username"
-                            label="Correo electrónico"
-                            rules={[
-                            {
-                                type: 'email',
-                                message: 'Favor ingresar correo valido',
-                            },
-                            {
-                                required: true,
-                                message: 'El correo es requerido',
-                            },
-                            ]}
-                        >
-                            <Input />
-                        </Form.Item> 
-
-                     
-
-                        <Form.Item 
-                            name="status"
-                            label="Estado"                             
-                        >
-                            <Select>
-                            <Option value="true">Activo</Option>
-                            <Option value="false">Inactivo</Option>
-                            </Select>
-                        </Form.Item>                       
-
-                    </Form>
-                </Col>
-            </Row>
-        </>
-    )
+                </Form>
+            </Col>
+        </Row>
+      </>
+  )
 }
 export default CreateStudent;
