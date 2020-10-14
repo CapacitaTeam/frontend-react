@@ -1,13 +1,17 @@
+import React from 'react'
+import GeneralData from '../StepContent/General'
+import Source from '../StepContent/Source'
+
 const step = [
     {
         title:'Datos Generales',
         description:'Descripcion del curso',
-        content: 'Datos generales'
+        content: <GeneralData/>
     },
     {
         title:'Recursos',
         description:'Crear y subir videos',
-        content: 'Recursos'
+        content: <Source/>
     },
     {
         title:'Resumen',
