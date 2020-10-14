@@ -9,11 +9,12 @@ const StudentProvider = ({ children }) => {
     let {  
         usersDataSources,
         setusersDataSources,
+        editUser,
         rowSelection,       
         columns
     } = useTableStudents();   
     return (
-        <Provider value={{ usersDataSources, setusersDataSources, columns, rowSelection }}>
+        <Provider value={{ usersDataSources, setusersDataSources, editUser, columns, rowSelection }}>
         {children}
         </Provider>
     );

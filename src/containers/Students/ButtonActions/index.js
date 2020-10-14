@@ -1,12 +1,14 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import { Space, Switch      } from 'antd';
 import { EditOutlined, CloseOutlined, CheckOutlined  } from '@ant-design/icons';
+import { StudentContext } from '../studentContext';
 
 
   const ButtonActions = (props) => {
-    //console.log(props);
+    let { editUser } = useContext(StudentContext);
+    //console.log(props.row.record.key);
     return  <Space size="middle">
-                <a><EditOutlined style={{ fontSize: '16px', color: '#616161' }}/></a>              
+                <a href="#" onClick={() => editUser(props.row.record.key)}><EditOutlined style={{ fontSize: '16px', color: '#616161' }}/></a>              
             </Space>
   };
     

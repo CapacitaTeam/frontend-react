@@ -17,22 +17,22 @@ const STUDENTS_LIST_REQUEST = gql`
     }`;
 
 const TableStudents = (_) => {
-  const { loading, error, refetch, data, networkStatus } = useQuery(STUDENTS_LIST_REQUEST, { notifyOnNetworkStatusChange: true });
-  let {  
-    usersDataSources,
-    setusersDataSources,
-    rowSelection,
-    columns } = useContext(StudentContext);
+    const { loading, error, refetch, data, networkStatus } = useQuery(STUDENTS_LIST_REQUEST, { notifyOnNetworkStatusChange: true });
+    let {  
+        usersDataSources,
+        setusersDataSources,
+        rowSelection,
+        columns } = useContext(StudentContext);
 
     useEffect(() => {
         refetch();
     }, [])
 
-  if (loading || networkStatus === NetworkStatus.refetch) return <div className="contains-spin"><Spin /></div>;
-  if (error) return <p>Error :(</p>;
-  if (!data || !data.users) return <p>Vacio :(</p>; 
+    if (loading || networkStatus === NetworkStatus.refetch) return <div className="contains-spin"><Spin /></div>;
+    if (error) return <p>Error :(</p>;
+    if (!data || !data.users) return <p>Vacio :(</p>; 
 
-  if(!usersDataSources)
+    if(!usersDataSources)
       setusersDataSources(data.users);
     
         return       <Table

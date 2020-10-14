@@ -8,6 +8,8 @@ import StatusStudent from './StatusStudent';
 
 export default () => {
     const [usersDataSources, setusersDataSources] = useState(null);
+    const [userDataSources, setuserDataSources] = useState(null);
+
     const [selectionType, setSelectionType] = useState('checkbox');
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');   
@@ -82,6 +84,12 @@ export default () => {
             clearFilters();
             setSearchText('');
         }; 
+
+        const editUser= async (id_user) => {
+            const current_user = await usersDataSources.filter(userDataSources => userDataSources.id === id_user);
+            console.log('state actual: ' + JSON.stringify(userDataSources));
+            setusersDataSources(current_user[0]);
+        }
             
         const columns = [
             {
@@ -89,7 +97,7 @@ export default () => {
                 key: 'action',
                 dataIndex: 'action',
                 render: (value, record) => (
-                    <ButtonActions status={{value}}/>
+                    <ButtonActions status={{value}} row={{record}}/>
                 ),
             },
             {
@@ -147,6 +155,7 @@ export default () => {
     return { 
         usersDataSources,
         setusersDataSources,
+        editUser,
         rowSelection,
         columns
     };

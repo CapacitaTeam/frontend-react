@@ -50,20 +50,20 @@ const { Option } = Select;
   };
 
   
-  const CREATE_USER = gql`  
-    mutation CreateUser ($firstname: String!, $lastname: String!, $username: String!, $password: String!, $status: Boolean!) {
-      createUser(firstname: $firstname, lastname: $lastname, username: $username, password: $password, status: $status){
+  const UPDATE_USER = gql`  
+    mutation UpdateUser ($id: Int!, $firstname: String!, $lastname: String!, $username: String!, $password: String!, $status: Boolean!) {
+        updateUser(id: $id, firstname: $firstname, lastname: $lastname, username: $username, password: $password, status: $status){
         key: id, username, status, createdat
   }
 }`;
 
-const CreateStudent = (props) => {
+const UpdateStudent = (props) => {
   
   const { handleOk } = useContext(ModalContext);
   const { usersDataSources, setusersDataSources } = useContext(StudentContext);
   const [form] = Form.useForm();
 
-  const [create_user] = useMutation(CREATE_USER);   
+  const [update_user] = useMutation(UPDATE_USER);   
 
 
   const onFinish = async (values) => {
@@ -71,18 +71,21 @@ const CreateStudent = (props) => {
     values.password = '123456';
     values.status = true;
 
+    var id = values.id;
     var firstname = values.firstname;
     var lastname  = values.lastname;
     var password  = values.password;
     var status    = values.status;
     var username  = values.username;
+    var password = values.password;
+    var status = values.status;
 
-    const new_user = await create_user({ variables: { firstname, lastname, username , password, status} })
+    const new_user = await create_user({ variables: { id, firstname, lastname, username , password, status} })
     .then(res => {    
         setusersDataSources(usersDataSources.concat(res.data.createUser));
         message
         .loading('Cargando..', 2.5)
-        .then(() => message.success('Estudiante agregado con éxito', 2.5))
+        .then(() => message.success('Estudiante se guardó con éxito', 2.5))
         
         handleOk();
     })
