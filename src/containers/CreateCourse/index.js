@@ -7,7 +7,6 @@ import StepContent from './StepContent';
 const CreateCourse = () => {
 
   const [current,setCurrent] = useState(0);
-  const [children,setChildren] = useState(<h1>Datos Generales</h1>);
 
   const onChangeStep = (value) => {
     setCurrent((value)?current+1:current-1);
@@ -19,9 +18,9 @@ const CreateCourse = () => {
   
   return <div>
     <StepsControl current={current}/>
+    <ButtonControls current={current} handleChange={onChangeStep} handleChangeChildren={onChangeChildren}/>
     <hr/>
     <StepContent current={current}/>
-    <ButtonControls current={current} handleChange={onChangeStep} handleChangeChildren={onChangeChildren}/>
   </div>
 };
   

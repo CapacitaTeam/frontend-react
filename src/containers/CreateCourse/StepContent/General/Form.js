@@ -34,8 +34,6 @@ export default props => {
         }
     ]
 
-    console.log(props);
-
     return <Form {...propsForm}>
         <Form.Item label="Titulo" name="title" rules={fieldRules}>
             <Input placeholder="Titulo del curso ..."/>            

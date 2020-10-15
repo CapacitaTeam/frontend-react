@@ -14,7 +14,6 @@ export default () => {
     const props = useContext(ContextCourse)
     const { createFormField: FormField } = form
     const field = field => (isObject(field) ? field : { value: field })
-    console.log(props)
     useEffect(()=>{
         form.setFieldsValue({
             title: get(props.initialValue, 'title', '')
