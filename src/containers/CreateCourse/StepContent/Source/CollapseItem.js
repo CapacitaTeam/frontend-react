@@ -7,11 +7,11 @@ import map from 'lodash/map'
 import style from '../../style.module.scss'
 
 const CollapseItem = props => {
-    const {itemOptions} = props
+    const {itemOptions,initalItem} = props
     const className = classNames(style.collapse_panel_item)
 
     const collapseProps = {
-        defaultActiveKey: [1],
+        defaultActiveKey: [initalItem],
         ghost: true,
         expandIconPosition: 'right'
     }

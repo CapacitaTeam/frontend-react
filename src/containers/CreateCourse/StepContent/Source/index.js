@@ -8,45 +8,41 @@ import InputTitle from '../../Common/InputTitle'
 import CollapseItem from './CollapseItem'
 // icon
 import { PlusOutlined, MinusCircleOutlined } from '@ant-design/icons';
-// helpers
-import flatten from 'lodash/flatten'
-import cloneDeep from 'lodash/cloneDeep'
-import remove from 'lodash/remove'
+// util
+import {getUniqueIdRandom} from '../../../../utils/getUniqueId'
 
 const Source = () => {
-
-    const [optionKey,setOptionKey] = useState(1)
+    const initalItem = getUniqueIdRandom()
     const initialOption = [
         {
-            key: optionKey,
+            key: initalItem,
             title: <InputTitle.Collapse placeholder="Titulo de la seccion" />,
             children: "test"
         }
     ]
-    const [itemOptions,setItemOptions] = useState(initialOption)
+    const [itemOptions,setItemOptions] = useState([])
+
+    useEffect(()=> {
+        if (itemOptions && itemOptions.length == 0) setItemOptions(initialOption)
+    })
 
     const collapseItemProps = {
-        itemOptions
+        itemOptions,
+        initalItem
     }
 
     const onClick = () => {
-        setOptionKey( optionKey + 1)
+        const newKey = getUniqueIdRandom()
         const newItem = {
-            key: optionKey,
+            key: newKey,
             title: <InputTitle.Collapse placeholder="Titulo de la seccion" />,
-            extra: <MinusCircleOutlined style={{color:'#ff4d4f'}} onClick={()=> removeItem(optionKey)}/>,
+            extra: <MinusCircleOutlined style={{color:'#ff4d4f'}} onClick={()=> removeItem(newKey)}/>,
             children: "test"
         }
-        let items = cloneDeep(itemOptions)
-        items.push(newItem)
-        setItemOptions(items)
+        setItemOptions(oldItem => [...oldItem,newItem])
     }
 
-    const removeItem = (key) => {
-        const items = remove(cloneDeep(itemOptions), (item) => item.key = key)
-        setOptionKey(optionKey - 1)
-        setItemOptions(items)     
-    };
+    const removeItem = (key) => setItemOptions(itemOptions => itemOptions.filter(item => item.key !== key));
 
     const buttonProps = {
         type: 'primary',
