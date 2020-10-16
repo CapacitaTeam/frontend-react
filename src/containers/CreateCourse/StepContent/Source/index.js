@@ -12,10 +12,10 @@ import { PlusOutlined, MinusCircleOutlined } from '@ant-design/icons';
 import {getUniqueIdRandom} from '../../../../utils/getUniqueId'
 
 const Source = () => {
-    const initalItem = getUniqueIdRandom()
+    const initialItem = getUniqueIdRandom()
     const initialOption = [
         {
-            key: initalItem,
+            key: initialItem,
             title: <InputTitle.Collapse placeholder="Titulo de la seccion" />,
             children: "test"
         }
@@ -28,7 +28,7 @@ const Source = () => {
 
     const collapseItemProps = {
         itemOptions,
-        initalItem
+        initialItem
     }
 
     const onClick = () => {
@@ -42,7 +42,9 @@ const Source = () => {
         setItemOptions(oldItem => [...oldItem,newItem])
     }
 
-    const removeItem = (key) => setItemOptions(itemOptions => itemOptions.filter(item => item.key !== key));
+    const removeItem = (key) => {
+        setItemOptions(itemOptions => itemOptions.filter(item => item.key !== key))
+    }
 
     const buttonProps = {
         type: 'primary',
@@ -50,7 +52,8 @@ const Source = () => {
         icon: <PlusOutlined />,
         children: 'Agregar seccion',
         className: 'mt-3',
-        onClick
+        onClick,
+        disabled: (itemOptions.length > 4)
     }
 
     return <Row> 
