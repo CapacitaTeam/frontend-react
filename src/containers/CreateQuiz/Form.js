@@ -1,5 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Form, Input, Button, Row, Radio, Col, Typography } from 'antd';
+import Form from 'antd/lib/form';
+import Input from 'antd/lib/input';
+import Button from 'antd/lib/button';
+import Radio from 'antd/lib/radio';
+import Typography from 'antd/lib/typography';
 import QuestionContext from './QuestionContext';
 import './quiz.css';
 

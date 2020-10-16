@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from 'react'
-import { Row, Col, Divider, Spin, message } from 'antd';
+
+import Row from 'antd/lib/row';
+import Col from 'antd/lib/col';
+import message from 'antd/lib/message';
+import Divider from 'antd/lib/Divider';
+
 import FormPregunta from './Form';
 import Questions from './Questions';
 
 import QuestionContext from './QuestionContext';
 import { gql, NetworkStatus } from 'apollo-boost';
 import { useQuery, useMutation } from '@apollo/react-hooks';
+import { SkeletonCreateQuiz } from './SkeletonCreateQuiz';
 
 const QUESTION_QUIZ_REQUEST = gql`  
     query QuestionsQuiz {
@@ -58,7 +64,9 @@ const CreateQuiz = () => {
         refetch();
     }, [])
 
-    if (loading || networkStatus === NetworkStatus.refetch) return <div className="contains-spin"><Spin /></div>;
+    if (loading || networkStatus === NetworkStatus.refetch)
+        return <SkeletonCreateQuiz />;
+
     if (error) return <p>Error :(</p>;
 
     const onFinish = async ({ id, question, a, b, c, d, correct_answer }) => {
