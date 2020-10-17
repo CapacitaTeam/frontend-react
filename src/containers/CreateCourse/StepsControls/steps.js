@@ -14,6 +14,11 @@ const step = [
         content: <Source/>
     },
     {
+        title:'Requerimientos',
+        description:'Agregar los requerimientos para tomar el curso',
+        content: 'Requerimientos'
+    },
+    {
         title:'Resumen',
         content: 'Resumen'
     }

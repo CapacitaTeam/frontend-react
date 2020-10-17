@@ -1,8 +1,10 @@
 /* eslint import/no-webpack-loader-syntax: off */
 import React, { useState } from 'react';
+// components
 import StepsControl from './StepsControls';
 import ButtonControls from './ButtonControls';
 import StepContent from './StepContent';
+import stepsOptions from "./StepsControls/steps";
 
 const CreateCourse = () => {
 
@@ -18,7 +20,7 @@ const CreateCourse = () => {
   
   return <div>
     <StepsControl current={current}/>
-    <ButtonControls current={current} handleChange={onChangeStep} handleChangeChildren={onChangeChildren}/>
+    <ButtonControls current={current} handleChange={onChangeStep} handleChangeChildren={onChangeChildren} totalOptions={stepsOptions.length}/>
     <hr/>
     <StepContent current={current}/>
   </div>

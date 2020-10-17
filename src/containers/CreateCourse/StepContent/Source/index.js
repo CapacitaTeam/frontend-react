@@ -8,6 +8,7 @@ import message from 'antd/lib/message'
 // components
 import InputTitle from '../../Common/InputTitle'
 import CollapseItem from './CollapseItem'
+import ContentSection from "./ContentSection";
 // icon
 import { PlusOutlined, MinusCircleOutlined } from '@ant-design/icons';
 // util
@@ -19,7 +20,7 @@ const Source = () => {
         {
             key: initialItem,
             title: <InputTitle.Collapse placeholder="Titulo de la seccion" />,
-            children: "test"
+            children: <ContentSection/>
         }
     ]
     const [itemOptions,setItemOptions] = useState([])
@@ -38,8 +39,8 @@ const Source = () => {
         const newItem = {
             key: newKey,
             title: <InputTitle.Collapse placeholder="Titulo de la seccion" />,
-            extra: <Popconfirm title="Porfavor, confirme si quiere eliminar esta seccion" okText="Borrar" cancelText="Cancelar" onConfirm={()=> removeItem(newKey)}><MinusCircleOutlined style={{color:'#ff4d4f'}}/></Popconfirm>,
-            children: "test"
+            extra: <Popconfirm placement="left" title="Porfavor, confirme si quiere eliminar esta seccion" okText="Eliminar" cancelText="Cancelar" onConfirm={()=> removeItem(newKey)}><MinusCircleOutlined style={{color:'#ff4d4f'}}/></Popconfirm>,
+            children: <ContentSection/>
         }
         setItemOptions(oldItem => [...oldItem,newItem])
     }

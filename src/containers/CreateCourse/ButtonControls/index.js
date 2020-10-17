@@ -8,7 +8,7 @@ import classNames from 'classnames';
 import style from '../style.module.scss'
 
 const ButtonControl = (props) => {
-  const {current, handleChange} = props;
+  const {current, handleChange, totalOptions:total} = props;
   const className = classNames(style.steps_action)
   const buttonContentProps = { 
     align:"center",
@@ -26,12 +26,12 @@ const ButtonControl = (props) => {
     right:{
       type:"ghost",
       icon:<RightOutlined />,
-      disabled:(current == 2),
+      disabled:(current == (total - 1 )),
       onClick: () => handleChange(true)
     },
     save:{
       type:"primary",
-      disabled:(current < 2)
+      disabled:(current < (total - 1 ))
     }
   }
 
