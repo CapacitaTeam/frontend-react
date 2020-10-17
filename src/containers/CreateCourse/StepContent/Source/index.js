@@ -3,6 +3,8 @@ import React, {useState,useEffect} from 'react';
 import Row from 'antd/lib/row'
 import Col from 'antd/lib/col'
 import Button from 'antd/lib/button'
+import Popconfirm from 'antd/lib/popconfirm'
+import message from 'antd/lib/message'
 // components
 import InputTitle from '../../Common/InputTitle'
 import CollapseItem from './CollapseItem'
@@ -36,7 +38,7 @@ const Source = () => {
         const newItem = {
             key: newKey,
             title: <InputTitle.Collapse placeholder="Titulo de la seccion" />,
-            extra: <MinusCircleOutlined style={{color:'#ff4d4f'}} onClick={()=> removeItem(newKey)}/>,
+            extra: <Popconfirm title="Porfavor, confirme si quiere eliminar esta seccion" okText="Borrar" cancelText="Cancelar" onConfirm={()=> removeItem(newKey)}><MinusCircleOutlined style={{color:'#ff4d4f'}}/></Popconfirm>,
             children: "test"
         }
         setItemOptions(oldItem => [...oldItem,newItem])
@@ -44,6 +46,7 @@ const Source = () => {
 
     const removeItem = (key) => {
         setItemOptions(itemOptions => itemOptions.filter(item => item.key !== key))
+        message.success('Seccion eliminada');
     }
 
     const buttonProps = {
