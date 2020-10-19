@@ -18,6 +18,7 @@ export default () => {
 
     const [users, setusers] = useState(null);
     const [user, setuser] = useState(initialState);
+    const [usersList, setusersList] = useState(null);
 
     const [selectionType, setSelectionType] = useState('checkbox');
     const [searchText, setSearchText] = useState('');
@@ -163,6 +164,8 @@ export default () => {
         setusers,
         user,
         setuser,
+        usersList,
+        setusersList,
         rowSelection,
         columns
     };

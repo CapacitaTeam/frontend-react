@@ -9,7 +9,7 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 const STUDENT_UPDATE= gql`  
 mutation UpdateStatusUser ($id: Int!, $status: Boolean!) {
     updateStatusUser(id: $id, status: $status){
-    key: id
+    key: id, status
 }
 }`;
 
@@ -23,15 +23,12 @@ const StatusStudent = (props) => {
 
     const handleClick = async (checked) => {
         //console.log(`switch - ${checked}`);            
-        //console.log(id_user);
-        //return;
         var id = id_user;
         var status = checked;
         const update_user= await student_update({ variables: { id, status} })
         .then(res => {
             message.success('Estudiante actualizado exitosamente.');    
             setChecked(checked)
-            console.log(res);
             return res;
         })
         .catch(err => {

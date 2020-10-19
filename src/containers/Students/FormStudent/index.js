@@ -134,9 +134,6 @@ const FormStudent = (props) => {
     password  = values.password;
     status    = (values.status.toLowerCase() === 'true');
     username  = values.username;
-
-    //console.log(status);
-    //console.log(status);
     //return;
 
     if (id === 0) 
@@ -162,11 +159,9 @@ const FormStudent = (props) => {
     {
       const update_user= await student_update({ variables: { id, firstname, lastname, status} })
       .then(res => {
-          message.success('Estudiante actualizado exitosamente.');      
-          //refetch();          
+          message.success('Estudiante actualizado exitosamente.');   
           handleOk();
-          console.log(res);
-          return res;
+          //console.log(res);
       })
       .catch(err => {
           message.error(setTimeout(() => {

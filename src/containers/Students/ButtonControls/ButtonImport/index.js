@@ -1,8 +1,8 @@
 import React from 'react'
 import { Button  } from 'antd';
 import { UsergroupAddOutlined  } from '@ant-design/icons';
-import ImportStudent from '../../../ImportStudent';
-import ButtonImportCreateStudents from '../../../ImportStudent/ButtonImport';
+import ImportStudent from '../../ImportStudent';
+import ButtonImportCreateStudents from '../../ImportStudent/ButtonImport';
 import { ModalContext } from '../../../../components/Modal/modalContext';
 
 const ButtonImport = (_) => {
