@@ -116,7 +116,7 @@ export default () => {
                 ],
                 onFilter: (value, record) => record.status.toString().indexOf(value) === 0,
                 render: (value, record) => (                    
-                    <StatusStudent status={{value}} />                       
+                    <StatusStudent status={{value}} row={{record}}/>                       
                 ),
             },
             {
