@@ -7,14 +7,15 @@ let { Provider } = (StudentContext = createContext());
 
 const StudentProvider = ({ children }) => {        
     let {  
-        usersDataSources,
-        setusersDataSources,
-        editUser,
+        users,
+        setusers,
+        user,
+        setuser,
         rowSelection,       
         columns
     } = useTableStudents();   
     return (
-        <Provider value={{ usersDataSources, setusersDataSources, editUser, columns, rowSelection }}>
+        <Provider value={{ users, setusers, user, setuser, columns, rowSelection }}>
         {children}
         </Provider>
     );

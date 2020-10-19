@@ -12,17 +12,17 @@ const Students = (props) => {
     return (
         <>       
             <StudentProvider>
-                <Row>
-                    <Col span={8}>
-                        <Title level={3}>Estudiantes</Title>
-                    </Col>
-                    <Col offset={11}>
-                        <ModalProvider>
-                            <ButtonControls />
-                        </ModalProvider>                    
-                    </Col>
-                </Row>
-                <TableStudents />
+                <ModalProvider>
+                    <Row>
+                        <Col span={8}>
+                            <Title level={3}>Estudiantes</Title>
+                        </Col>
+                        <Col offset={11}>
+                                <ButtonControls />                 
+                        </Col>
+                    </Row>
+                    <TableStudents />
+                </ModalProvider>                   
             </StudentProvider >
           
         </>

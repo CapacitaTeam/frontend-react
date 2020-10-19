@@ -10,6 +10,8 @@ const STUDENTS_LIST_REQUEST = gql`
     query User {
         users{
             key: id
+            firstname
+            lastname
             username
             status
             createdat
@@ -19,8 +21,8 @@ const STUDENTS_LIST_REQUEST = gql`
 const TableStudents = (_) => {
     const { loading, error, refetch, data, networkStatus } = useQuery(STUDENTS_LIST_REQUEST, { notifyOnNetworkStatusChange: true });
     let {  
-        usersDataSources,
-        setusersDataSources,
+        users,
+        setusers,
         rowSelection,
         columns } = useContext(StudentContext);
 
@@ -32,13 +34,14 @@ const TableStudents = (_) => {
     if (error) return <p>Error :(</p>;
     if (!data || !data.users) return <p>Vacio :(</p>; 
 
-    if(!usersDataSources)
-      setusersDataSources(data.users);
+
+    if(!users)
+      setusers(data.users);
     
         return       <Table
                         rowSelection={rowSelection}
                         columns={columns}
-                        dataSource={usersDataSources}
+                        dataSource={users}
                     />
   
   }

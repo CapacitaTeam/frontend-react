@@ -1,17 +1,21 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import { Button  } from 'antd';
 import { UserAddOutlined  } from '@ant-design/icons';
-import CreateStudent from '../../../CreateStudent';
-import ButtonFormCreateStudent from '../../../CreateStudent/ButtonForm';
+import FormStudent from '../../FormStudent';
+import ButtonFormStudent from '../../FormStudent/ButtonForm';
 import { ModalContext } from '../../../../components/Modal/modalContext';
+import { StudentContext } from '../../studentContext';
 
 const ButtonAdd = (_) => {
     
-    let { handleModal } = React.useContext(ModalContext);
+    let { handleModal } = useContext(ModalContext);
+    let { user } = useContext(StudentContext);
+    var id_user = user.key;
+    
     const propsDialog = {       
           Title:    "Crear Estudiante",
-          Content:  <CreateStudent />,   
-          Footer:   <ButtonFormCreateStudent />,
+          Content:  <FormStudent id_user={{id_user}}/>,   
+          Footer:   <ButtonFormStudent texto="Agregar"/>,
       };
 
     return (

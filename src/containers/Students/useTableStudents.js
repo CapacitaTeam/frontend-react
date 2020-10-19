@@ -1,18 +1,28 @@
-import React, { useState  } from 'react';
+import React, { useState, useContext  } from 'react';
 import {Table, Space, Avatar, Input, Button,Spin } from 'antd';
 import { UserOutlined, SearchOutlined   } from '@ant-design/icons';
 import Highlighter from 'react-highlight-words';
 import ButtonActions from './ButtonActions';
 import StatusStudent from './StatusStudent';
 
+const initialState = {
+    key: 0,
+    firstname: "", 
+    lastname: "", 
+    password: "", 
+    status: true, 
+    username: ""
+};
 
-export default () => {
-    const [usersDataSources, setusersDataSources] = useState(null);
-    const [userDataSources, setuserDataSources] = useState(null);
+export default () => {    
+
+    const [users, setusers] = useState(null);
+    const [user, setuser] = useState(initialState);
 
     const [selectionType, setSelectionType] = useState('checkbox');
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');   
+    
             
     const rowSelection = {
         onChange: (selectedRowKeys, selectedRows) => {
@@ -85,11 +95,7 @@ export default () => {
             setSearchText('');
         }; 
 
-        const editUser= async (id_user) => {
-            const current_user = await usersDataSources.filter(userDataSources => userDataSources.id === id_user);
-            console.log('state actual: ' + JSON.stringify(userDataSources));
-            setusersDataSources(current_user[0]);
-        }
+       
             
         const columns = [
             {
@@ -153,9 +159,10 @@ export default () => {
     
 
     return { 
-        usersDataSources,
-        setusersDataSources,
-        editUser,
+        users,
+        setusers,
+        user,
+        setuser,
         rowSelection,
         columns
     };
