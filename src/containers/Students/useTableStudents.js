@@ -11,7 +11,8 @@ const initialState = {
     lastname: "", 
     password: "", 
     status: true, 
-    username: ""
+    username: "",
+    id_role: 3
 };
 
 export default () => {    

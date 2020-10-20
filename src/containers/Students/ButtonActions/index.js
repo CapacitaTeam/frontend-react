@@ -14,7 +14,7 @@ const ButtonActions = (props) => {
        
         const propsDialog = {       
             Title:    "Actualizar Estudiante",
-            Content:  <FormStudent id_user={{id_user}}/>,   
+            Content:  <FormStudent id_user={{id_user}}/>,      
             Footer:   <ButtonFormStudent texto="Actualizar"/>,
         };
         handleModal(propsDialog);

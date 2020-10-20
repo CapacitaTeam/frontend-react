@@ -18,7 +18,7 @@ const Students = (props) => {
                             <Title level={3}>Estudiantes</Title>
                         </Col>
                         <Col offset={11}>
-                                <ButtonControls />                 
+                                <ButtonControls />                                           
                         </Col>
                     </Row>
                     <TableStudents />

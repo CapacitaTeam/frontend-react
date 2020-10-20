@@ -11,8 +11,10 @@ import {
 import { ModalContext } from '../../../components/Modal/modalContext';
 import { StudentContext } from '../studentContext';
 
+
 import { gql, NetworkStatus } from 'apollo-boost';
 import { useQuery, useMutation } from '@apollo/react-hooks';
+
 
 
 const { Option } = Select;
@@ -59,12 +61,13 @@ const { Option } = Select;
           username
           status
           createdat
+          id_role
       }
   }`;
   
   const STUDENT_CREATE = gql`  
-    mutation CreateUser ($firstname: String!, $lastname: String!, $username: String!, $password: String!, $status: Boolean!) {
-      createUser(firstname: $firstname, lastname: $lastname, username: $username, password: $password, status: $status){
+    mutation CreateUser ($firstname: String!, $lastname: String!, $username: String!, $status: Boolean!, $id_role: Int! ) {
+      createUser(firstname: $firstname, lastname: $lastname, username: $username, status: $status, id_role: $id_role){
         key: id, username, status, createdat
     }
   }`;
@@ -81,8 +84,8 @@ const { Option } = Select;
 const FormStudent = (props) => {
   const { handleOk } = useContext(ModalContext);
   const { users, setusers, user, setuser } = useContext(StudentContext);
+
   const [form] = Form.useForm();    
-  var infouser = null
 
   const [student_create] = useMutation(STUDENT_CREATE);  
   const [student_update] = useMutation(STUDENT_UPDATE);
@@ -101,9 +104,9 @@ const FormStudent = (props) => {
   var id = 0;
   var firstname = "";
   var lastname  = "";
-  var password = "";
   var status    = false;
   var username  = "";
+  var id_role = 3;
 
   if (!data[0] && !data.user[0]) 
   {   
@@ -112,6 +115,7 @@ const FormStudent = (props) => {
     lastname  = user.lastname;
     status    = user.status;
     username  = user.username;    
+    id_role  = user.id_role;   
   }
   else
   {
@@ -120,25 +124,28 @@ const FormStudent = (props) => {
     lastname  = data.user[0].lastname;
     status    = data.user[0].status;
     username  = data.user[0].username;
+    id_role  = data.user[0].id_role;
   }
+
+  console.log(username);
      
 
 
   const onFinish = async (values) => {
     //console.log('Received values of form: ', values);    
-    values.password = '123456';
+    //values.password = '123456';    
 
     id        = values.id;
     firstname = values.firstname;
     lastname  = values.lastname;
-    password  = values.password;
     status    = (values.status.toLowerCase() === 'true');
     username  = values.username;
+    id_role   = parseInt(values.id_role); 
     //return;
 
     if (id === 0) 
     {
-      const new_user = await student_create({ variables: { firstname, lastname, username , password, status} })
+      const new_user = await student_create({ variables: { firstname, lastname, username, status, id_role} })
       .then(res => {    
           setusers(users.concat(res.data.createUser));
           message
@@ -190,7 +197,8 @@ const FormStudent = (props) => {
                         firstname: `${firstname}`,
                         lastname: `${lastname}` ,
                         username: `${username}` ,
-                        status: `${status}`                 
+                        status: `${status}`,
+                        id_role: `${id_role}`,                 
                     }}
                     scrollToFirstError
                     id="formStudent">
@@ -244,17 +252,31 @@ const FormStudent = (props) => {
                         ]}
                     >
                         <Input  />
-                    </Form.Item>                      
+                    </Form.Item>    
+
+                                                     
 
                     <Form.Item 
                         name="status"
                         label="Estado"                             
                     >
                         <Select>
-                        <Option value="true">Activo</Option>
-                        <Option value="false">Inactivo</Option>
+                          <Option value="true">Activo</Option>
+                          <Option value="false">Inactivo</Option>
                         </Select>
-                    </Form.Item>                       
+                    </Form.Item>         
+
+                    <Form.Item 
+                        name="id_role"
+                        label="Rol"       
+                        style={{ display: 'none' }}                      
+                    >
+                        <Select disabled>
+                          <Option value="1">Administrador</Option>
+                          <Option value="2">Profesor</Option>
+                          <Option value="3">Estudiante</Option>
+                        </Select>
+                    </Form.Item>               
 
                 </Form>
             </Col>

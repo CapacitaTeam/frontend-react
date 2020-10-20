@@ -15,6 +15,7 @@ const STUDENTS_LIST_REQUEST = gql`
             username
             status
             createdat
+            id_role
         }
     }`;
 
