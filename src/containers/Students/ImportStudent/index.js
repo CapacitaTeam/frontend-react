@@ -41,52 +41,29 @@ import { StudentContext } from '../studentContext';
   
  
 const ImportStudent = (props) => {
-    const { usersList, setusersList } = useContext(StudentContext);
-
-    /*useImperativeHandle(ref, () => ({
-        list: fileList
-    }));*/
-
-    const {contentFooterResult, displayDefaultFooter} = props;
+    const { setusersImportList } = useContext(StudentContext);
     const { Dragger } = Upload;
     const [fileList,setFileList] = useState([]);
-    //const [userList,setuserList] = useState([]);
 
-  
-    const setDevices = (data,fields) => {
-      if (!isEmpty(data) && !isEmpty(fields)){
-          let values = [];
-          data.map((item) => {             
-              values.push(item);
-          });
-          setusersList(values);
-          //console.log(usersList);
-          const variables = {list:values}
-          //console.log(variables);
-          fetch({variables});
-      }
-    };
 
   const onUploadFile = (file) => {
     var students = papaParse.parse(file,{
           header: true,
           complete: (result) => {
-            setFileList([file]);        
-            setDevices(remove(flattenDeep(result.data)),result.meta.fields);
+            setFileList([file]);   
+            setusersImportList(result.data);
           }
       });
       return false;
   };
 
   const onChangeFile = (info) => {
-     //console.log(info.fileList);
       const { status } = info.file;
       if (status === 'done') {
           message.success(`${info.file.name} file uploaded successfully.`);
       } else if (status === 'error') {
           message.error(`${info.file.name} file upload failed.`);
       }
-      //console.log(userList);
   };
 
   const propsUpload = {
@@ -101,8 +78,6 @@ const ImportStudent = (props) => {
       }
   };
  
-
-
     return (
         <>      
             <Row>

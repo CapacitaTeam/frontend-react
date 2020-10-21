@@ -19,7 +19,7 @@ export default () => {
 
     const [users, setusers] = useState(null);
     const [user, setuser] = useState(initialState);
-    const [usersList, setusersList] = useState(null);
+    const [usersImportList, setusersImportList] = useState([]);
 
     const [selectionType, setSelectionType] = useState('checkbox');
     const [searchText, setSearchText] = useState('');
@@ -95,9 +95,7 @@ export default () => {
         function handleReset(clearFilters) {
             clearFilters();
             setSearchText('');
-        }; 
-
-       
+        };              
             
         const columns = [
             {
@@ -165,8 +163,8 @@ export default () => {
         setusers,
         user,
         setuser,
-        usersList,
-        setusersList,
+        usersImportList, 
+        setusersImportList,
         rowSelection,
         columns
     };

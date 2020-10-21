@@ -132,8 +132,7 @@ const FormStudent = (props) => {
 
 
   const onFinish = async (values) => {
-    //console.log('Received values of form: ', values);    
-    //values.password = '123456';    
+    //console.log('Received values of form: ', values); 
 
     id        = values.id;
     firstname = values.firstname;
@@ -141,7 +140,6 @@ const FormStudent = (props) => {
     status    = (values.status.toLowerCase() === 'true');
     username  = values.username;
     id_role   = parseInt(values.id_role); 
-    //return;
 
     if (id === 0) 
     {

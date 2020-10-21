@@ -27,9 +27,9 @@ const TableStudents = (_) => {
         rowSelection,
         columns } = useContext(StudentContext);
 
-    useEffect(() => {
+    /*useEffect(() => {
         refetch();
-    }, [])
+    }, [])*/
 
     if (loading || networkStatus === NetworkStatus.refetch) return <div className="contains-spin"><Spin /></div>;
     if (error) return <p>Error :(</p>;
