@@ -39,7 +39,7 @@ const Source = () => {
         const newItem = {
             key: newKey,
             title: <InputTitle.Collapse placeholder="Titulo de la seccion" />,
-            extra: <Popconfirm placement="left" title="Porfavor, confirme si quiere eliminar esta seccion" okText="Eliminar" cancelText="Cancelar" onConfirm={()=> removeItem(newKey)}><MinusCircleOutlined style={{color:'#ff4d4f'}}/></Popconfirm>,
+            extra: <Popconfirm placement="left" title="Porfavor, confirme si quiere eliminar esta seccion"  onClick={event => event.stopPropagation()} okText="Eliminar" cancelText="Cancelar" onConfirm={()=> removeItem(newKey)}><MinusCircleOutlined style={{color:'#ff4d4f'}}/></Popconfirm>,
             children: <ContentSection/>
         }
         setItemOptions(oldItem => [...oldItem,newItem])
