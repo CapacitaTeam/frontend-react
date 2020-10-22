@@ -1,20 +1,16 @@
 import React, {useContext} from 'react'
-import { Button, message  } from 'antd';
-
+//antd Component
+import Button from "antd/lib/button";
+import message from "antd/lib/message";
+//Context
 import { ModalContext } from '../../../../components/Modal/modalContext';
 import { StudentContext } from '../../studentContext';
+//Graphql
+import { UserMutations } from '../../../../graphql';
+import { gql } from 'apollo-boost';
+import {  useMutation } from '@apollo/react-hooks';
 
-import { gql, NetworkStatus } from 'apollo-boost';
-import { useQuery, useMutation } from '@apollo/react-hooks';
-
-const IMPORT_STUDENTS_CREATE = gql`  
-mutation CreateUsers($UserInput: [UserInput])
-  {
-    createUsers(users: $UserInput) 
-    {      
-        key: id, username, status, createdat
-  	}
-  }`;
+const { IMPORT_STUDENTS_CREATE } = UserMutations;
 
 const ButtonImportCreateStudents = (_) => {  
     const { handleOk } = useContext(ModalContext);
@@ -27,23 +23,16 @@ const ButtonImportCreateStudents = (_) => {
 
         const import_user = await import_students_create({ variables: { UserInput: UserInput }  })
         .then(res => {    
-            //console.log(res.data.createUsers);
-            setusers(users.concat(res.data.createUsers));
-            
+            setusers(users.concat(res.data.createUsers));            
             message
             .loading('Cargando..', 2.5)
-            .then(() => message.success('Se han agregado '+ countStudent +' estudiantes con éxito', 2.5))
-            
+            .then(() => message.success('Se han agregado '+ countStudent +' estudiantes con éxito', 2.5))            
             handleOk();
         })
         .catch(err => {
-            message.error(setTimeout(() => {
-                'Inténtelo luego.'
-            }, 300));
-  
+            message.error(err.message);  
             return null;
         }); 
-        //console.log(usersImportList);
 
      };
 

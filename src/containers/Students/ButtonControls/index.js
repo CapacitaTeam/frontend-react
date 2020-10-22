@@ -1,5 +1,8 @@
 import React from 'react'
-import { Row, Col  } from 'antd';
+//antd Component
+import Row from "antd/lib/row";
+import Col from "antd/lib/col";
+//Components
 import ButtonAdd from './ButtonAdd';
 import ButtonImport from './ButtonImport';
 

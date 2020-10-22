@@ -1,6 +1,5 @@
 import React, { createContext } from 'react';
 import useTableStudents from './useTableStudents';
-import index from './index';
 
 let StudentContext;
 let { Provider } = (StudentContext = createContext());
@@ -13,11 +12,12 @@ const StudentProvider = ({ children }) => {
         setuser,
         usersImportList, 
         setusersImportList,
-        rowSelection,       
+        rowSelection,  
+        pagination,     
         columns
     } = useTableStudents();   
     return (
-        <Provider value={{ users, setusers, user, setuser, usersImportList, setusersImportList, columns, rowSelection }}>
+        <Provider value={{ users, setusers, user, setuser, usersImportList, setusersImportList, rowSelection, pagination, columns }}>
         {children}
         </Provider>
     );

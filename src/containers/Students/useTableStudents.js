@@ -1,7 +1,14 @@
 import React, { useState, useContext  } from 'react';
-import {Table, Space, Avatar, Input, Button,Spin } from 'antd';
+//antd Component
+import Space from "antd/lib/space";
+import Avatar from "antd/lib/avatar";
+import Input from "antd/lib/input";
+import Button from "antd/lib/button";
+//antd Icons
 import { UserOutlined, SearchOutlined   } from '@ant-design/icons';
+//Helpers
 import Highlighter from 'react-highlight-words';
+//Components
 import ButtonActions from './ButtonActions';
 import StatusStudent from './StatusStudent';
 
@@ -21,7 +28,6 @@ export default () => {
     const [user, setuser] = useState(initialState);
     const [usersImportList, setusersImportList] = useState([]);
 
-    const [selectionType, setSelectionType] = useState('checkbox');
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');   
     
@@ -34,7 +40,7 @@ export default () => {
             disabled: record.name === 'Disabled User',
             name: record.name,
         }),
-        };
+    };
         
     
     function getColumnSearchProps(dataIndex) {
@@ -95,7 +101,13 @@ export default () => {
         function handleReset(clearFilters) {
             clearFilters();
             setSearchText('');
-        };              
+        };        
+
+        const pagination= {
+            defaultPageSize: 5, 
+            showSizeChanger: true, 
+            pageSizeOptions: ['5', '10', '50']
+          };
             
         const columns = [
             {
@@ -127,8 +139,7 @@ export default () => {
                     <Space size="middle">
                         <Avatar icon={<UserOutlined />} />
                     </Space>
-                    )
-                    
+                    )                    
             },
             {
                 title: 'Username',
@@ -152,11 +163,8 @@ export default () => {
                 key: 'course',
                 sorter: (a, b) => ('' + a.course).localeCompare(b.course),
                 ...getColumnSearchProps('course'),
-            },
-            
-            
-        ];
-    
+            },  
+        ];    
 
     return { 
         users,
@@ -166,6 +174,7 @@ export default () => {
         usersImportList, 
         setusersImportList,
         rowSelection,
+        pagination,
         columns
     };
 };

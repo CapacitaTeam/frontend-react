@@ -1,14 +1,18 @@
 import React from 'react'
-import { Row, Col, Typography  } from 'antd';
+//antd Component
+import Row from "antd/lib/row";
+import Col from "antd/lib/col";
+import Typography from "antd/lib/typography";
+//Components
 import ButtonControls from './ButtonControls';
 import TableStudents from './TableStudents';
+//Context
 import { ModalProvider } from "../../components/Modal/modalContext";
 import { StudentProvider } from "./studentContext";
 
 
 const { Title } = Typography;
-const Students = (props) => {
-   
+const Students = (props) => {   
     return (
         <>       
             <StudentProvider>
@@ -23,8 +27,7 @@ const Students = (props) => {
                     </Row>
                     <TableStudents />
                 </ModalProvider>                   
-            </StudentProvider >
-          
+            </StudentProvider >          
         </>
     )
 }

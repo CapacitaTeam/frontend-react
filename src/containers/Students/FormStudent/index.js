@@ -1,26 +1,25 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { 
-    Form,
-    Input,
-    Select,
-    Row,
-    Col,
-    message,
-    Spin
-} from 'antd';
+import React, { useContext } from 'react'
+//antd Component
+import Form from "antd/lib/form";
+import Input from "antd/lib/input";
+import Select from "antd/lib/select";
+import Row from "antd/lib/row";
+import Col from "antd/lib/col";
+import message from "antd/lib/message";
+import Spin from "antd/lib/spin";
+//Context
 import { ModalContext } from '../../../components/Modal/modalContext';
 import { StudentContext } from '../studentContext';
-
-
-import { gql, NetworkStatus } from 'apollo-boost';
+//Graphql
+import { UserQueries, UserMutations } from '../../../graphql';
+import { NetworkStatus } from 'apollo-boost';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 
+const { STUDENT_REQUEST } = UserQueries;
+const { STUDENT_CREATE, STUDENT_UPDATE } = UserMutations;
 
-
-const { Option } = Select;
-
-  
-  const formItemLayout = {
+const { Option } = Select;  
+const formItemLayout = {
     labelCol: {
       xs: {
         span: 24,
@@ -37,9 +36,8 @@ const { Option } = Select;
         span: 24,
       },
     },
-  };
-
-  const tailFormItemLayout = {
+};
+const tailFormItemLayout = {
     wrapperCol: {
       xs: {
         span: 24,
@@ -50,54 +48,18 @@ const { Option } = Select;
         offset: 6,
       },
     },
-  };
-
-  const STUDENT_REQUEST = gql`  
-    query User($id: Int!) {
-      user(id: $id){
-          key: id
-          firstname
-          lastname
-          username
-          status
-          createdat
-          id_role
-      }
-  }`;
-  
-  const STUDENT_CREATE = gql`  
-    mutation CreateUser ($firstname: String!, $lastname: String!, $username: String!, $status: Boolean!, $id_role: Int! ) {
-      createUser(firstname: $firstname, lastname: $lastname, username: $username, status: $status, id_role: $id_role){
-        key: id, username, status, createdat
-    }
-  }`;
-
-  const STUDENT_UPDATE= gql`  
-  mutation UpdateUser ($id: Int!, $firstname: String!, $lastname: String!, $status: Boolean!) {
-    updateUser(id: $id, firstname: $firstname, lastname: $lastname, status: $status){
-      key: id, username, status, createdat
-  }
-}`;
-
-
+};
 
 const FormStudent = (props) => {
   const { handleOk } = useContext(ModalContext);
-  const { users, setusers, user, setuser } = useContext(StudentContext);
-
+  const { users, setusers, user } = useContext(StudentContext);
   const [form] = Form.useForm();    
 
   const [student_create] = useMutation(STUDENT_CREATE);  
   const [student_update] = useMutation(STUDENT_UPDATE);
 
-  //console.log(props.user.id_user); 
   var id_user = props.id_user.id_user;
   const { loading, error, refetch, data, networkStatus } = useQuery(STUDENT_REQUEST, {  variables: { id: id_user }, notifyOnNetworkStatusChange: true });    
-
- /* useEffect(() => {
-      refetch();
-  }, [])*/
-
   if (loading || networkStatus === NetworkStatus.refetch) return <div className="contains-spin"><Spin /></div>;
   if (error) return <p>Error :(</p>;
     
@@ -126,14 +88,9 @@ const FormStudent = (props) => {
     username  = data.user[0].username;
     id_role  = data.user[0].id_role;
   }
-
-  console.log(username);
      
 
-
   const onFinish = async (values) => {
-    //console.log('Received values of form: ', values); 
-
     id        = values.id;
     firstname = values.firstname;
     lastname  = values.lastname;
@@ -149,14 +106,10 @@ const FormStudent = (props) => {
           message
           .loading('Cargando..', 2.5)
           .then(() => message.success('Estudiante agregado con éxito', 2.5))
-          
           handleOk();
       })
       .catch(err => {
-          message.error(setTimeout(() => {
-              'Inténtelo luego.'
-          }, 300));
-
+          message.error(err.message);
           return null;
       });
     }
@@ -166,18 +119,12 @@ const FormStudent = (props) => {
       .then(res => {
           message.success('Estudiante actualizado exitosamente.');   
           handleOk();
-          //console.log(res);
       })
       .catch(err => {
-          message.error(setTimeout(() => {
-              'Inténtelo luego.'
-          }, 300));
-
+          message.error(err.message);
           return null;
       });
-    }
-
-    
+    }    
   };  
 
   return (
@@ -250,9 +197,7 @@ const FormStudent = (props) => {
                         ]}
                     >
                         <Input  />
-                    </Form.Item>    
-
-                                                     
+                    </Form.Item>                    
 
                     <Form.Item 
                         name="status"

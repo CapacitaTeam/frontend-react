@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
-import { Modal, Button } from 'antd';
+//antd Component
+import Modal from "antd/lib/modal";
+//Context
 import { ModalContext } from './modalContext';
 
 const Dialog = () => {

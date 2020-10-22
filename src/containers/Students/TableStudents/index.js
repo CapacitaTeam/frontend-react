@@ -1,23 +1,15 @@
 import React, { useContext, useEffect  } from 'react'
-import {Table, Spin} from 'antd';
-
+//antd Component
+import Table from "antd/lib/table";
+import Spin from "antd/lib/spin";
+//Context
 import { StudentContext } from '../studentContext';
-import { gql, NetworkStatus } from 'apollo-boost';
+//Graphql
+import { UserQueries } from '../../../graphql';
+import { NetworkStatus } from 'apollo-boost';
 import { useQuery } from '@apollo/react-hooks';
 
-
-const STUDENTS_LIST_REQUEST = gql`  
-    query User {
-        users{
-            key: id
-            firstname
-            lastname
-            username
-            status
-            createdat
-            id_role
-        }
-    }`;
+const { STUDENTS_LIST_REQUEST } = UserQueries;
 
 const TableStudents = (_) => {
     const { loading, error, refetch, data, networkStatus } = useQuery(STUDENTS_LIST_REQUEST, { notifyOnNetworkStatusChange: true });
@@ -25,11 +17,8 @@ const TableStudents = (_) => {
         users,
         setusers,
         rowSelection,
+        pagination,
         columns } = useContext(StudentContext);
-
-    /*useEffect(() => {
-        refetch();
-    }, [])*/
 
     if (loading || networkStatus === NetworkStatus.refetch) return <div className="contains-spin"><Spin /></div>;
     if (error) return <p>Error :(</p>;
@@ -43,11 +32,10 @@ const TableStudents = (_) => {
                         rowSelection={rowSelection}
                         columns={columns}
                         dataSource={users}
+                        pagination={pagination}
                     />
   
-  }
-
-    
+  }    
   export default TableStudents;
 
 

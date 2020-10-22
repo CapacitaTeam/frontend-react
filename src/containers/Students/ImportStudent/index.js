@@ -3,43 +3,12 @@ import { FileExcelTwoTone} from '@ant-design/icons';
 //antd Component
 import Row from "antd/lib/row";
 import Col from "antd/lib/col";
-import Spin from "antd/lib/spin";
 import Upload from "antd/lib/upload";
-import Icon from "antd/lib/icon";
 import message from "antd/lib/message"
-import Popover from "antd/lib/popover";
-import Card from "antd/lib/card";
-import Statistic from "antd/lib/statistic";
-import Alert from "antd/lib/alert";
-// helpers
-import isEmpty from 'lodash/isEmpty';
-import find from 'lodash/find';
 // parser
 import papaParse from 'papaparse';
-import remove from 'lodash/remove';
-import flattenDeep from 'lodash/flattenDeep';
 import { StudentContext } from '../studentContext';
-
-
-
-/*const props = {
-    name: 'file',
-    multiple: false,
-    action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
-    onChange(info) {
-      const { status } = info.file;
-      if (status !== 'uploading') {
-        console.log(info.file, info.fileList);
-      }
-      if (status === 'done') {
-        message.success(`${info.file.name} Archivo cargado con éxito.`);
-      } else if (status === 'error') {
-        message.error(`${info.file.name} Falló la importación del archivo.`);
-      }
-    },
-  };*/
   
- 
 const ImportStudent = (props) => {
     const { setusersImportList } = useContext(StudentContext);
     const { Dragger } = Upload;

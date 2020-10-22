@@ -1,8 +1,8 @@
 import React from 'react'
-import { Button  } from 'antd';
+//antd Component
+import Button from "antd/lib/button";
 
 const ButtonFormStudent = (props) => {  
-    //console.log(props);
     return (
         <> 
             <Button key="submit" htmlType="submit" type="primary" form="formStudent" >
