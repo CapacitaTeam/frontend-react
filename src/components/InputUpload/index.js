@@ -1,39 +1,25 @@
 import React from 'react'
 // antd
 import Input from 'antd/lib/input'
-import Upload from 'antd/lib/upload'
-// components
-import UploadButton from './UploadButton'
+// components 
+import UploadAddonAfter from './UploadAddonAfter'
+import UploadAddonBefore from './UploadAddonBefore'
 
 const InputUpload = (props) => {
 
-    const {type,preview} = props
+    const {type,preview,files} = props
 
-    const getAddonAfter = () => {
-        let accept = ''
-        switch (type) {
-            case 'image':
-                accept = '.jpeg, .jpg, .png'
-                break;
+    const addonBeforeProps = {
+        title: 'Archivo'
+    }
 
-            case 'video':
-                accept = '.mp4, .avi, .mkv'
-                break;
-                    
-            case 'pdf':
-                accept = '.pdf'
-                break;
-
-            default:
-                accept = ''
-                break;
-        }
-        return <Upload accept={accept} showUploadList={false}> <UploadButton /></Upload>
+    const addonAfterProps = {
+        type
     }
 
     const inputProps = {
-        addonBefore: "Archivo",
-        addonAfter: getAddonAfter()
+        addonBefore: <UploadAddonBefore {...addonBeforeProps} />,
+        addonAfter: <UploadAddonAfter {...addonAfterProps}/>
     }
 
     return <div>

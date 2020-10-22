@@ -1,8 +1,14 @@
 import React from 'react'
 import GeneralData from '../StepContent/General'
 import Source from '../StepContent/Source'
+//test
+import InputUpload from '../../../components/InputUpload'
 
 const step = [
+    {
+        title:'Test',
+        content: <InputUpload/>
+    },
     {
         title:'Datos Generales',
         description:'Descripcion del curso',
