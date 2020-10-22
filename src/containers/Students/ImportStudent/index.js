@@ -49,8 +49,15 @@ const ImportStudent = (props) => {
   const onUploadFile = (file) => {
     var students = papaParse.parse(file,{
           header: true,
+          skipEmptyLines: true,
           complete: (result) => {
-            setFileList([file]);   
+            setFileList([file]);
+            result.data.forEach(function(e){
+              if (typeof e === "object" ){
+                e["status"] = true
+                e["id_role"] = 3
+              }
+            });
             setusersImportList(result.data);
           }
       });
