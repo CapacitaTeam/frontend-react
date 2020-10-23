@@ -3,11 +3,11 @@ import React, { Fragment } from 'react'
 import {CaretDownOutlined} from '@ant-design/icons';
 
 const UploadAddonBefore = (props) => {
-    const {files, title} = props
+    const {files, title, onClickFiles} = props
     return <Fragment>
         {title}
         {(files && files.length > 0)&&
-            <CaretDownOutlined />
+            <CaretDownOutlined className="ml-1" onClick={onClickFiles}/>
         }
     </Fragment>
 }

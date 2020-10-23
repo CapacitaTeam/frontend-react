@@ -1,0 +1,19 @@
+.gridContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    grid-gap: 1rem;
+    padding: 1rem;
+    border: 1px solid #e8e8e8;
+    border-radius: 2px;
+    max-height: 200px;
+    overflow: auto;
+}
+
+.card {
+    cursor: pointer ;
+}
+
+.imageItem{
+    line-height: 120px;
+    cursor: pointer;
+}

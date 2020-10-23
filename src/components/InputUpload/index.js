@@ -1,20 +1,24 @@
-import React from 'react'
+import React, { Fragment, useState } from 'react'
 // antd
 import Input from 'antd/lib/input'
 // components 
 import UploadAddonAfter from './UploadAddonAfter'
 import UploadAddonBefore from './UploadAddonBefore'
+import FileView from './FileView'
 
 const InputUpload = (props) => {
-
     const {type,preview,files} = props
+    const [isOpenImageView,setIsOpenImageView] = useState(false)
 
     const addonBeforeProps = {
-        title: 'Archivo'
+        title: 'Archivo',
+        files,
+        onClickFiles: () => setIsOpenImageView(!isOpenImageView)
     }
 
     const addonAfterProps = {
-        type
+        type,
+        value:"https://thumbs.dreamstime.com/b/environment-earth-day-hands-trees-growing-seedlings-bokeh-green-background-female-hand-holding-tree-nature-field-gra-130247647.jpg"
     }
 
     const inputProps = {
@@ -22,9 +26,12 @@ const InputUpload = (props) => {
         addonAfter: <UploadAddonAfter {...addonAfterProps}/>
     }
 
-    return <div>
+    return <Fragment>
         <Input {...inputProps}/>
-    </div>
+        {
+            (files && files.length > 0 && isOpenImageView) && <FileView files={files} type={type}/>
+        }
+    </Fragment>
 }
 
 export default InputUpload
