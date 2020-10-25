@@ -11,7 +11,7 @@ const step = [
             {url:"https://www.publicdomainpictures.net/pictures/320000/velka/background-image.png"},
             {url:"https://64.media.tumblr.com/6907c5365f93adda93bcc402ba831c55/tumblr_nuqopyURlN1qk7o3wo1_1280.jpg"},
             {url:"https://cdn.searchenginejournal.com/wp-content/uploads/2019/08/c573bf41-6a7c-4927-845c-4ca0260aad6b-760x400.jpeg"}
-            ]}/>
+            ]} preview={true}/>
     },
     {
         title:'Datos Generales',

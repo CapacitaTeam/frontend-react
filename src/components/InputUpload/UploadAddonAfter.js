@@ -8,7 +8,7 @@ import UploadButton from './UploadButton'
 import isEmpty from 'lodash/isEmpty';
 
 const UploadAddonAfter = (props) => {
-    const {type,preview,value} = props
+    const {type,preview,value,onOpenModal,onRemoveValue} = props
 
     const accept = (type_value) => {
         switch (type_value) {
@@ -27,11 +27,13 @@ const UploadAddonAfter = (props) => {
     }
 
     const eyeIconProps = {
-        style: {cursor: 'pointer'}
+        style: {cursor: 'pointer'},
+        onClick: () => onOpenModal()
     }
 
     const closeIconProps = {
-        style: {cursor: 'pointer'}
+        style: {cursor: 'pointer'},
+        onClick: () => onRemoveValue()
     }
 
     return <Fragment>
