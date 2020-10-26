@@ -1,6 +1,7 @@
 import React from 'react'
 import GeneralData from '../StepContent/General'
 import Source from '../StepContent/Source'
+import Requirements from "../StepContent/Requirements";
 //test
 import InputUpload from '../../../components/InputUpload'
 
@@ -26,7 +27,7 @@ const step = [
     {
         title:'Requerimientos',
         description:'Agregar los requerimientos para tomar el curso',
-        content: 'Requerimientos'
+        content: <Requirements />
     },
     {
         title:'Resumen',
