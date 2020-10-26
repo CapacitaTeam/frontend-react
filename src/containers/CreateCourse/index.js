@@ -5,6 +5,8 @@ import StepsControl from './StepsControls';
 import ButtonControls from './ButtonControls';
 import StepContent from './StepContent';
 import stepsOptions from "./StepsControls/steps";
+// context
+import Context from './Context'
 
 const CreateCourse = () => {
 
@@ -17,13 +19,17 @@ const CreateCourse = () => {
   const onChangeChildren = (value) => {
     setCurrent(value);
   }
+
+  const initialValue = {
+    title:"test123"
+  }
   
-  return <div>
+  return <Context.Provider value={{initialValue}}>
     <StepsControl current={current}/>
     <ButtonControls current={current} handleChange={onChangeStep} handleChangeChildren={onChangeChildren} totalOptions={stepsOptions.length}/>
     <hr/>
     <StepContent current={current}/>
-  </div>
+  </Context.Provider>
 };
   
 export default CreateCourse;

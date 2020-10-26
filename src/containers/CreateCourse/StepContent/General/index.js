@@ -14,11 +14,11 @@ export default () => {
     const props = useContext(ContextCourse)
     const { createFormField: FormField } = form
     const field = field => (isObject(field) ? field : { value: field })
-    useEffect(()=>{
+    /*useEffect(()=>{
         form.setFieldsValue({
             title: get(props.initialValue, 'title', '')
         })
-    },[])
+    },[])*/
     
     return <FormGeneral {...props} form={form}/>
 }

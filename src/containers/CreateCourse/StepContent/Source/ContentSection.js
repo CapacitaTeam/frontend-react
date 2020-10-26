@@ -25,11 +25,11 @@ const ContentSection = (props) => {
         },
         {
             title: 'Video',
-            children: "test"
+            children: <InputUpload type="video"/>
         },
         {
             title: 'PDF',
-            children: "test"
+            children: <InputUpload type="pdf"/>
         },
         {
             title: 'Prueba',

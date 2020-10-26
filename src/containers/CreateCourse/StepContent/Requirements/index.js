@@ -29,7 +29,7 @@ const Requirements = (props) => {
         const newKey = getUniqueIdRandom()
         const newItem = {
             key: newKey,
-            extra: <PopConfirm placement="left" title="Porfavor, confirme si quiere eliminar este requerimiento"  onClick={event => event.stopPropagation()} okText="Eliminar" cancelText="Cancelar" onConfirm={()=> removeItem(newKey)}><MinusCircleOutlined style={{color:'#ff4d4f'}}/></PopConfirm>,
+            extra: <PopConfirm placement="right" title="Porfavor, confirme si quiere eliminar este requerimiento"  onClick={event => event.stopPropagation()} okText="Eliminar" cancelText="Cancelar" onConfirm={()=> removeItem(newKey)}><MinusCircleOutlined style={{color:'#ff4d4f'}}/></PopConfirm>,
             children: <InputItem/>
         }
         setItemOptions(oldItem => [...oldItem,newItem])
