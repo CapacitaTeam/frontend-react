@@ -1,13 +1,16 @@
 /* eslint import/no-webpack-loader-syntax: off */
 import React, { useState } from 'react';
+// components
 import StepsControl from './StepsControls';
 import ButtonControls from './ButtonControls';
 import StepContent from './StepContent';
+import stepsOptions from "./StepsControls/steps";
+// context
+import Context from './Context'
 
 const CreateCourse = () => {
 
   const [current,setCurrent] = useState(0);
-  const [children,setChildren] = useState(<h1>Datos Generales</h1>);
 
   const onChangeStep = (value) => {
     setCurrent((value)?current+1:current-1);
@@ -16,14 +19,17 @@ const CreateCourse = () => {
   const onChangeChildren = (value) => {
     setCurrent(value);
   }
+
+  /*const initialValue = {
+    title:"test123"
+  }*/
   
-  return <div>
+  return <Context.Provider>
     <StepsControl current={current}/>
-    <hr/>
-    <ButtonControls current={current} handleChange={onChangeStep} handleChangeChildren={onChangeChildren}/>
+    <ButtonControls current={current} handleChange={onChangeStep} handleChangeChildren={onChangeChildren} totalOptions={stepsOptions.length}/>
     <hr/>
     <StepContent current={current}/>
-  </div>
+  </Context.Provider>
 };
   
 export default CreateCourse;

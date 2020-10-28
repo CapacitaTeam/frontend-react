@@ -3,13 +3,42 @@ import React from 'react';
 import Space from 'antd/lib/space';
 import Button from 'antd/lib/button';
 import { LeftOutlined,RightOutlined } from '@ant-design/icons';
+import classNames from 'classnames';
+// Style
+import style from '../style.module.scss'
 
 const ButtonControl = (props) => {
-  
-  return <Space align="center" direction="horizontal" size="middle">
-            <Button type="ghost" shape="round" icon={<LeftOutlined />} onClick={() => props.handleChange(false)} disabled={(props.current == 0)}/>
-            <Button type="ghost" shape="round" icon={<RightOutlined />} onClick={() => props.handleChange(true)} disabled={(props.current == 2)}/>
-            <Button type="primary" disabled={(props.current < 2)}>Guardar</Button>
+  const {current, handleChange, totalOptions:total} = props;
+  const className = classNames(style.steps_action)
+  const buttonContentProps = { 
+    align:"center",
+    direction:"horizontal", 
+    size:"middle",
+    className
+  }
+  const buttonProps = {
+    left:{
+      type:"ghost", 
+      icon:<LeftOutlined />,
+      disabled:(current == 0),
+      onClick: () => handleChange(false)
+    },
+    right:{
+      type:"ghost",
+      icon:<RightOutlined />,
+      disabled:(current == (total - 1 )),
+      onClick: () => handleChange(true)
+    },
+    save:{
+      type:"primary",
+      disabled:(current < (total - 1 ))
+    }
+  }
+
+  return <Space {...buttonContentProps}>
+            <Button {...buttonProps.left}/>
+            <Button {...buttonProps.right}/>
+            <Button {...buttonProps.save}>Guardar</Button>
         </Space>
 };
   
