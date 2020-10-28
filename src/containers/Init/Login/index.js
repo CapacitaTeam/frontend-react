@@ -9,7 +9,7 @@ import Background from './background.svg';
 //import './style.css';
 
 import { gql } from 'apollo-boost';
-import { useMutation, throwServerError } from '@apollo/react-hooks';
+import { useMutation } from '@apollo/react-hooks';
 
 const LOGIN_REQUEST = gql`
   

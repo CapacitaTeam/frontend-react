@@ -31,12 +31,12 @@ const Sider = props =>{
                     </Menu.Item>
                     <Menu.Item key="3" icon={<AppstoreAddOutlined />}>
                         <UISref to="App.CreateCourse" ><a>Crear Curso</a></UISref>
-                    </Menu.Item>
+                    </Menu.Item>                   
                     <Menu.Item key="4" icon={<AppstoreAddOutlined />}>
-                        <UISref to="App.Quizzes" ><a>Quizzes</a></UISref>
+                        <UISref to="App.CreateQuiz" ><a>Crear Quiz</a></UISref>
                     </Menu.Item>
                     <Menu.Item key="5" icon={<AppstoreAddOutlined />}>
-                        <UISref to="App.CreateQuiz" ><a>Crear Quiz</a></UISref>
+                        <UISref to="App.DoQuiz" ><a>Realizar Quiz</a></UISref>
                     </Menu.Item>
                     <Menu.Item key="6" icon={<AppstoreAddOutlined />}>
                         <UISref to="App.Students" ><a>Estudiantes</a></UISref>
