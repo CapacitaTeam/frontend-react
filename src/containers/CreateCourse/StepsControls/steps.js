@@ -2,6 +2,7 @@ import React from 'react'
 import GeneralData from '../StepContent/General'
 import Source from '../StepContent/Source'
 import Requirements from "../StepContent/Requirements";
+import Resume from '../StepContent/Resume'
 //test
 import InputUpload from '../../../components/InputUpload'
 
@@ -31,7 +32,7 @@ const step = [
     },
     {
         title:'Resumen',
-        content: 'Resumen'
+        content: <Resume />
     }
 ]
 

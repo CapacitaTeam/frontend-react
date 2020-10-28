@@ -20,11 +20,11 @@ const CreateCourse = () => {
     setCurrent(value);
   }
 
-  const initialValue = {
+  /*const initialValue = {
     title:"test123"
-  }
+  }*/
   
-  return <Context.Provider value={{initialValue}}>
+  return <Context.Provider>
     <StepsControl current={current}/>
     <ButtonControls current={current} handleChange={onChangeStep} handleChangeChildren={onChangeChildren} totalOptions={stepsOptions.length}/>
     <hr/>
