@@ -1,3 +1,5 @@
+import React from 'react'
+import {PlayCircleOutlined} from '@ant-design/icons';
 import Courses from '../containers/Courses';
 const states = [
     {
@@ -8,7 +10,12 @@ const states = [
             main: Courses
         },
         data:{
-            contentScrollable: false
+            contentScrollable: false,
+            nav: {
+                type: 'menu',
+                sort: 0,
+                icon: <PlayCircleOutlined />
+            }
         }
     }
 ];

@@ -1,3 +1,5 @@
+import React from 'react'
+import {AppstoreAddOutlined} from '@ant-design/icons';
 import CreateCourse from '../containers/CreateCourse';
 const states = [
     {
@@ -6,6 +8,13 @@ const states = [
         title:'Crear Cursos',
         views: {
             main: CreateCourse
+        },
+        data: {
+            nav: {
+              type: 'menu',
+              sort: 0,
+              icon: <AppstoreAddOutlined/>
+            }
         }
     }
 ];
