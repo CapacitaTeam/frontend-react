@@ -1,4 +1,6 @@
+import React from 'react'
 import Dashboard from '../containers/Dashboard';
+import {DashboardOutlined} from '@ant-design/icons';
 const states = [
     {
         url:'Dashboard',
@@ -6,6 +8,13 @@ const states = [
         title:'Dashboard',
         views: {
             main: Dashboard
+        },
+        data: {
+            nav: {
+              type: 'menu',
+              sort: 0,
+              icon: <DashboardOutlined/>
+            }
         }
     }
 ];
