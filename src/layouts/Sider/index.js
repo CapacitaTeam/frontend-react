@@ -4,6 +4,7 @@ import {UIRouterConsumer, UISref} from '@uirouter/react';
 // antd
 import {DashboardOutlined, PlayCircleOutlined, AppstoreAddOutlined} from '@ant-design/icons';
 import { Layout, Menu} from 'antd';
+//import Menu from 'antd/lib/menu';
 // custom icons
 import Logo from '!svg-react-loader?name=Icon!../Logo/logo.svg';
 import LogoNoText from '!svg-react-loader?name=Icon!../Logo/logo_without_text.svg';
@@ -40,13 +41,8 @@ function baseMenuItem(props) {
       return <Menu.SubMenu {...props} />
     } else {
       return (
-        <Menu.Item key={key} className="d-flex">
-          <UISref to={name}>
-            <a>
-              {iconComponent}
-              {title}
-            </a>
-          </UISref>
+        <Menu.Item key={key} className="d-flex align-items-center" icon={iconComponent}>
+          <UISref to={name}><a>{title}</a></UISref>
         </Menu.Item>
       )
     }
