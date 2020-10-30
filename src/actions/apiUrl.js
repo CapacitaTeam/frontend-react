@@ -1,8 +1,8 @@
 const prod = 'https://devapi.capacita.tech/'
-const dev = 'http://api.capacita.tech:3001/'
+const dev = 'http://api.capacita.tech:3002/'
 const local = 'http://localhost:3001/';
 
-const api = `${local}`
+const api = `${dev}`
 
 const API = {
     base: api,

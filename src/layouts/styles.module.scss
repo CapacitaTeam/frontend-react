@@ -1,0 +1,10 @@
+.SideMenu{
+    background: transparent !important;
+    border: 0 !important;
+
+    :global {
+        .ant-menu-item:empty{
+            display: none;
+        }
+    }
+}

@@ -1,3 +1,5 @@
+import React from 'react'
+import {AppstoreAddOutlined} from '@ant-design/icons';
 import CreateQuiz from '../containers/CreateQuiz';
 const states = [
     {
@@ -8,7 +10,12 @@ const states = [
             main: CreateQuiz
         },
         data:{
-            contentScrollable: false
+            contentScrollable: false,
+            nav: {
+                type: 'menu',
+                sort: 0,
+                icon: <AppstoreAddOutlined />
+            }
         }
     }
 ];
