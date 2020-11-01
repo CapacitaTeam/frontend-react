@@ -6,12 +6,20 @@ import { buildAxiosFetch } from '@lifeomic/axios-fetch'
 import interceptor from './authService/httpInterceptor'
 import API from './actions/apiUrl'
 import { InMemoryCache } from 'apollo-boost'
+import authService from './authService';
 
 interceptor.registerInterceptor()
 
 const client = new ApolloClient({
     uri: API.graphql,
     fetch: buildAxiosFetch(httpProvider),
+    fetchOptions: () => {
+        const token = authService.getUser();
+        alert(token);
+        return {
+          headers: { authorization: token ? `Bearer ${token}` : '' }
+        }
+      },
     cache: new InMemoryCache({ addTypename: false })
 })
 
